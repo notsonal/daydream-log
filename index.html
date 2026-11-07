@@ -1,0 +1,2606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Daydream">
+<meta name="theme-color" content="#cfe4f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151232" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: light; }
+body { margin: 0; font: 14px/1.4 system-ui, -apple-system, sans-serif; }
+img { max-width: 100%; }
+</style>
+<title>Daydream Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Nunito+Sans:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* Layout: one column of frosted "windows" floating in a hazy pastel sky; a fullscreen slideshow layer above it; tab bar pinned to the bottom. */
+:root {
+  --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --font-body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "VT323", "Courier New", monospace;
+  --bg-top: #cfe4f7;
+  --bg-mid: #f6d8e6;
+  --bg-low: #fde6d3;
+  --cloud: rgba(255, 255, 255, 0.72);
+  --ink: #3a3157;
+  --ink-soft: #5f5680;
+  --glass: rgba(255, 255, 255, 0.55);
+  --glass-solid: rgba(255, 250, 253, 0.74);
+  --glass-edge: rgba(255, 255, 255, 0.9);
+  --field: rgba(255, 255, 255, 0.6);
+  --line: rgba(58, 49, 87, 0.16);
+  --accent: #ea8fbb;
+  --accent-ink: #34294f;
+  --lilac: #cbbcf2;
+  --aqua: #a9e2e0;
+  --mood1: #9db4de;
+  --mood2: #b9b2e6;
+  --mood3: #dccbef;
+  --mood4: #f6c3d9;
+  --mood5: #ffd89c;
+  --char-body: #fffaff;
+  --char-eye: #3a3157;
+  --char-cheek: #f6a9c9;
+  --char-shine: #ffffff;
+  --shadow: 0 10px 34px rgba(120, 100, 170, 0.2);
+  --show-bg: #120f22;
+  --show-ink: #fbf6ff;
+  --grain: 0.22;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-top: #151232;
+    --bg-mid: #2a1f55;
+    --bg-low: #4d2b5f;
+    --cloud: rgba(255, 255, 255, 0.07);
+    --ink: #f1e9ff;
+    --ink-soft: #bcb1de;
+    --glass: rgba(255, 255, 255, 0.08);
+    --glass-solid: rgba(40, 30, 78, 0.72);
+    --glass-edge: rgba(255, 255, 255, 0.2);
+    --field: rgba(255, 255, 255, 0.09);
+    --line: rgba(241, 233, 255, 0.2);
+    --accent: #f2a3cc;
+    --accent-ink: #2a1f55;
+    --lilac: #8d79d6;
+    --aqua: #6fcfcb;
+    --mood1: #7f97d4;
+    --mood2: #9a90dc;
+    --mood3: #bba8e0;
+    --mood4: #f0a8cb;
+    --mood5: #ffcf85;
+    --char-body: #e9e0ff;
+    --char-eye: #2a1f55;
+    --char-cheek: #f2a3cc;
+    --char-shine: #ffffff;
+    --shadow: 0 10px 34px rgba(0, 0, 0, 0.38);
+    --show-bg: #0b0918;
+    --show-ink: #fbf6ff;
+    --grain: 0.3;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg-top: #151232;
+  --bg-mid: #2a1f55;
+  --bg-low: #4d2b5f;
+  --cloud: rgba(255, 255, 255, 0.07);
+  --ink: #f1e9ff;
+  --ink-soft: #bcb1de;
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-solid: rgba(40, 30, 78, 0.72);
+  --glass-edge: rgba(255, 255, 255, 0.2);
+  --field: rgba(255, 255, 255, 0.09);
+  --line: rgba(241, 233, 255, 0.2);
+  --accent: #f2a3cc;
+  --accent-ink: #2a1f55;
+  --lilac: #8d79d6;
+  --aqua: #6fcfcb;
+  --mood1: #7f97d4;
+  --mood2: #9a90dc;
+  --mood3: #bba8e0;
+  --mood4: #f0a8cb;
+  --mood5: #ffcf85;
+  --char-body: #e9e0ff;
+  --char-eye: #2a1f55;
+  --char-cheek: #f2a3cc;
+  --char-shine: #ffffff;
+  --shadow: 0 10px 34px rgba(0, 0, 0, 0.38);
+  --show-bg: #0b0918;
+  --show-ink: #fbf6ff;
+  --grain: 0.3;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+button, a, .zone, .orb, .tick, .chip { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+body.typing .tabs { display: none; }
+a { color: var(--ink); }
+.dot { width: 100%; max-width: 24px; height: auto; aspect-ratio: 1; }
+.mood .mono { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 380px) { .orb { width: 46px; height: 46px; font-size: 21px; } }
+body.typing .app { padding-bottom: 24px; }
+/* phones: drop per-card blur and the blended grain so scrolling stays smooth */
+@media (hover: none) and (pointer: coarse) {
+  .win { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--glass-solid); }
+  body::after { mix-blend-mode: normal; opacity: calc(var(--grain) * 0.45); }
+  .show { overscroll-behavior: contain; }
+  .stage img, .stage video { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+}
+body {
+  background-color: var(--bg-mid);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-text-size-adjust: 100%;
+}
+body.noscroll { overflow: hidden; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60% 26% at 18% 9%, var(--cloud), transparent 72%),
+    radial-gradient(48% 22% at 88% 20%, var(--cloud), transparent 72%),
+    radial-gradient(70% 26% at 35% 64%, var(--cloud), transparent 72%),
+    radial-gradient(40% 18% at 92% 82%, var(--cloud), transparent 72%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 52%, var(--bg-low) 100%);
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: var(--grain);
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(255, 255, 255, 0.35) 2px 3px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .45 0 0 0 0 .6 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.app {
+  max-width: 560px;
+  margin: 0 auto;
+  padding-block: 12px 118px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--font-mono); letter-spacing: 0.06em; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* hud */
+.hud { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+#dateLine { font-size: 21px; color: var(--ink-soft); }
+.hud-r { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pill {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  padding: 6px 11px 5px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1.5px solid var(--glass-edge);
+  color: var(--ink);
+  white-space: nowrap;
+}
+button.pill { cursor: pointer; }
+.pill.hot { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .pill.hot { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 50% { transform: scale(1.06); } }
+}
+.note {
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1.5px solid var(--glass-edge);
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.sync { background: none; border: 0; padding: 0; font-size: 18px; color: var(--ink-soft); }
+button.sync:not([disabled]) { cursor: pointer; text-decoration: underline; }
+
+.identity-wrap { display: grid; gap: 2px; }
+.identity {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px dashed var(--line);
+  padding: 2px 0 6px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--ink);
+  border-radius: 0;
+}
+.identity::placeholder { color: var(--ink-soft); opacity: 0.7; }
+.tiny { font-size: 18px; color: var(--ink-soft); }
+
+/* windows */
+.view { display: grid; gap: 16px; }
+.win {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1.5px solid var(--glass-edge);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-width: 0;
+}
+.win > .bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 14px 3px;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.07em;
+  color: var(--ink-soft);
+  border-bottom: 1.5px solid var(--line);
+  background: linear-gradient(90deg, rgba(203, 188, 242, 0.4), rgba(169, 226, 224, 0.3));
+}
+.win > .bar a { color: inherit; }
+.win > .bar > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.win > .body { padding: 14px; display: grid; gap: 12px; min-width: 0; }
+.empty { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.fine { margin: 0; color: var(--ink-soft); font-size: 13.5px; }
+.lead { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 23px; line-height: 1.22; text-wrap: pretty; }
+
+/* controls */
+.field {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: var(--field);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 11px 12px;
+}
+textarea.field { resize: vertical; min-height: 84px; }
+select.field { appearance: auto; }
+.field::placeholder { color: var(--ink-soft); opacity: 0.75; }
+.btn {
+  font: 700 15px var(--font-body);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 20px;
+  cursor: pointer;
+}
+.btn.wide { width: 100%; }
+.btn.big { font-size: 17px; padding: 14px 20px; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+.btn.small { padding: 8px 14px; font-size: 14px; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.x {
+  font: 600 13px var(--font-body);
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  padding: 6px 4px;
+  cursor: pointer;
+  text-decoration: underline;
+  flex: none;
+}
+.x.armed { color: var(--ink); font-weight: 700; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+form.stack { display: grid; gap: 10px; }
+.two { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 420px) { .two { grid-template-columns: 1fr 1fr; } }
+.lbl { font-family: var(--font-mono); font-size: 18px; color: var(--ink-soft); letter-spacing: 0.05em; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font: 600 14px var(--font-body);
+  color: var(--ink);
+  background: var(--field);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+
+/* character */
+.charbody { grid-template-columns: 112px 1fr; align-items: center; }
+.char { width: 112px; height: 104px; display: grid; place-items: center; }
+.char img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.char-svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 5px 10px rgba(120, 100, 170, 0.3)); }
+.c-body { fill: var(--char-body); }
+.c-shine { fill: var(--char-shine); opacity: 0.75; }
+.c-eye { fill: var(--char-eye); }
+.c-glint { fill: var(--char-shine); }
+.c-line { fill: none; stroke: var(--char-eye); stroke-width: 3; stroke-linecap: round; }
+.c-cheek { fill: var(--char-cheek); opacity: 0.85; }
+.c-shadow { fill: var(--line); }
+.c-star { fill: var(--mood5); }
+.c-halo { fill: none; stroke: var(--mood5); stroke-width: 3; }
+@media (prefers-reduced-motion: no-preference) {
+  .c-float, .char img { animation: float 3.4s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-5px); } }
+}
+.speech { display: grid; gap: 8px; min-width: 0; }
+.says { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 21px; line-height: 1.2; overflow-wrap: anywhere; }
+.xp { height: 10px; border-radius: 999px; background: var(--field); border: 1.5px solid var(--line); overflow: hidden; }
+.xp-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--lilac), var(--accent), var(--mood5)); border-radius: 999px; }
+.xp-t { font-size: 17px; color: var(--ink-soft); }
+@media (max-width: 380px) { .charbody { grid-template-columns: 1fr; justify-items: center; text-align: center; } .speech { justify-items: center; width: 100%; } .xp { width: 100%; } }
+
+/* moods */
+.moods { display: flex; justify-content: space-between; gap: 4px; }
+.mood { display: grid; justify-items: center; gap: 4px; flex: 1; min-width: 0; }
+.mood .mono { font-size: 16px; color: var(--ink-soft); }
+.orb {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 34% 28%, var(--char-shine) 0, var(--c) 60%);
+  box-shadow: 0 4px 14px rgba(120, 100, 170, 0.28);
+}
+.orb[aria-pressed="true"] { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* trend */
+.trend { display: flex; justify-content: space-between; gap: 2px; }
+.day { display: grid; justify-items: center; gap: 4px; flex: 1; min-width: 0; }
+.dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  line-height: 1;
+  background: radial-gradient(circle at 34% 28%, var(--char-shine) 0, var(--c) 62%);
+}
+.dot.none { background: none; border: 1.5px dashed var(--ink-soft); opacity: 0.55; }
+.day .mono { font-size: 16px; color: var(--ink-soft); }
+
+/* rows */
+.row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1.5px solid var(--line); min-width: 0; }
+.row:first-child { border-top: 0; padding-top: 0; }
+.row:last-child { padding-bottom: 0; }
+.grow { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.title { font-weight: 600; }
+.why { font-size: 14px; color: var(--ink-soft); }
+.row.done .title { text-decoration: line-through; opacity: 0.6; }
+.tick {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid var(--ink-soft);
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--accent-ink);
+  padding: 0;
+}
+.tick svg { opacity: 0; }
+.tick[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+.tick[aria-pressed="true"] svg { opacity: 1; }
+.meta { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; font-family: var(--font-mono); font-size: 18px; color: var(--ink-soft); letter-spacing: 0.05em; }
+.pips { display: inline-flex; gap: 4px; }
+.pip { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ink-soft); }
+.pip.on { background: var(--accent); border-color: var(--accent); }
+
+/* visualisation timer */
+.viz { display: grid; grid-template-columns: 112px 1fr; gap: 14px; align-items: center; padding-bottom: 12px; border-bottom: 1.5px solid var(--line); }
+.viz:last-child { border-bottom: 0; padding-bottom: 0; }
+.ringbox { position: relative; width: 112px; height: 112px; }
+.ring { display: block; width: 100%; height: 100%; }
+.ring-bg { stroke: var(--line); }
+.ring-fg { stroke: var(--accent); }
+.ring-t { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.04em; }
+.cue { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 19px; line-height: 1.2; }
+.viz .btnrow { gap: 6px; }
+
+/* timeline */
+.moment { display: grid; grid-template-columns: 74px 1fr auto; gap: 10px; align-items: start; padding: 10px 0; border-top: 1.5px solid var(--line); }
+.moment:first-child { border-top: 0; padding-top: 0; }
+.moment:last-child { padding-bottom: 0; }
+.stamp { font-family: var(--font-mono); font-size: 20px; line-height: 1.05; }
+.stamp small { display: block; font-size: 16px; color: var(--ink-soft); }
+.said { overflow-wrap: anywhere; min-width: 0; display: flex; gap: 8px; align-items: flex-start; }
+.said .em { flex: none; font-size: 17px; line-height: 1.35; }
+
+/* countdown */
+.cd { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.cd-d { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 64px; line-height: 0.95; font-variant-numeric: tabular-nums; }
+.cd-u { font-family: var(--font-mono); font-size: 22px; color: var(--ink-soft); }
+.cd-t { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.08em; }
+.cd-label { font-weight: 600; overflow-wrap: anywhere; }
+.cd-when { font-family: var(--font-mono); font-size: 18px; color: var(--ink-soft); }
+.cd-row { display: grid; gap: 4px; padding: 12px 0; border-top: 1.5px solid var(--line); }
+.cd-row:first-child { border-top: 0; padding-top: 0; }
+.cd-row:last-child { padding-bottom: 0; }
+.cd-row .cd-d { font-size: 42px; }
+.cd-row.past { opacity: 0.6; }
+.cd-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+
+/* board */
+.board { columns: 2 150px; column-gap: 12px; }
+.tile {
+  break-inside: avoid;
+  margin: 0 0 12px;
+  padding: 8px 8px 6px;
+  background: var(--glass);
+  border: 1.5px solid var(--glass-edge);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 6px;
+}
+.thumb { position: relative; display: block; width: 100%; padding: 0; border: 0; background: var(--field); border-radius: 8px; overflow: hidden; cursor: pointer; min-height: 60px; }
+.thumb img, .thumb video { width: 100%; height: auto; display: block; }
+.thumb .play { position: absolute; right: 6px; bottom: 6px; font-family: var(--font-mono); font-size: 16px; padding: 1px 7px; border-radius: 999px; background: var(--glass); color: var(--ink); }
+.cap {
+  width: 100%;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px dashed transparent;
+  padding: 2px 0;
+}
+.cap:focus { border-bottom-color: var(--line); }
+.cap::placeholder { color: var(--ink-soft); opacity: 0.7; }
+.tile .x { justify-self: end; }
+.dropping .win:first-child { outline: 3px dashed var(--accent); outline-offset: 4px; }
+
+/* mind */
+.kicker { font-size: 18px; color: var(--ink-soft); }
+.idea-t { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 34px; line-height: 1.05; text-wrap: balance; }
+.idea-b { margin: 0; font-size: 16.5px; max-width: 62ch; }
+.try { margin: 0; padding: 10px 12px; border-radius: 12px; background: var(--field); border: 1.5px dashed var(--line); }
+.try .mono { color: var(--ink-soft); font-size: 18px; margin-right: 6px; }
+.q { margin: 0; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 29px; line-height: 1.12; text-wrap: balance; }
+details summary { cursor: pointer; font-family: var(--font-mono); font-size: 19px; color: var(--ink-soft); }
+details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-size: 14.5px; }
+.ans { padding: 8px 0; border-top: 1.5px solid var(--line); font-size: 14.5px; overflow-wrap: anywhere; }
+.ans b { display: block; font-weight: 600; }
+
+/* badges */
+.badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.badge-c { padding: 10px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--field); display: grid; gap: 2px; }
+.badge-c .bn { font-family: var(--font-mono); font-size: 20px; letter-spacing: 0.04em; }
+.badge-c .bd { font-size: 13px; color: var(--ink-soft); }
+.badge-c.on { background: linear-gradient(135deg, var(--mood4), var(--mood5)); border-color: var(--glass-edge); color: var(--accent-ink); }
+.badge-c.on .bd { color: var(--accent-ink); }
+.badge-c.off { opacity: 0.55; }
+
+/* slideshow */
+.show { position: fixed; inset: 0; z-index: 40; background: var(--show-bg); color: var(--show-ink); overflow: hidden; touch-action: manipulation; }
+.show-bg { position: absolute; inset: -40px; background-size: cover; background-position: center; filter: blur(30px) saturate(1.2); opacity: 0.55; }
+.stage { position: absolute; inset: 0; display: grid; place-items: center; }
+.stage img, .stage video { max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; }
+.zones { position: absolute; inset: 0; display: grid; grid-template-columns: 35% 65%; z-index: 1; }
+.zone { background: transparent; border: 0; padding: 0; cursor: pointer; }
+.show-top {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  z-index: 2;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px)) 10px max(14px, env(safe-area-inset-left, 0px));
+  display: grid;
+  gap: 8px;
+  background: linear-gradient(180deg, rgba(10, 8, 24, 0.55), transparent);
+}
+.bars { display: flex; gap: 4px; }
+.bars span { flex: 1; height: 3px; border-radius: 2px; background: rgba(251, 246, 255, 0.3); }
+.bars span.on { background: var(--show-ink); }
+.show-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.show-name { font-family: var(--font-mono); font-size: 20px; letter-spacing: 0.06em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.show-btns { display: flex; gap: 6px; }
+.sbtn { font-family: var(--font-mono); font-size: 19px; line-height: 1; color: var(--show-ink); background: rgba(251, 246, 255, 0.16); border: 1.5px solid rgba(251, 246, 255, 0.35); border-radius: 999px; padding: 6px 11px 5px; cursor: pointer; }
+.show-cap {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  padding: 40px max(18px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px));
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.1;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(0deg, rgba(10, 8, 24, 0.55), transparent);
+}
+.show-timer {
+  position: absolute;
+  z-index: 2;
+  right: max(14px, env(safe-area-inset-right, 0px));
+  top: calc(74px + env(safe-area-inset-top, 0px));
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  pointer-events: none;
+  max-width: 180px;
+  text-align: center;
+}
+.show-timer .ringbox { width: 84px; height: 84px; }
+.show-timer .ring-t { font-size: 24px; color: var(--show-ink); }
+.show-timer .ring-bg { stroke: rgba(251, 246, 255, 0.25); }
+.show-timer .cue { font-size: 16px; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
+.show-hint { position: absolute; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 20px; padding: 8px 14px; border-radius: 999px; background: rgba(10, 8, 24, 0.55); pointer-events: none; white-space: nowrap; }
+
+/* popup */
+.pop { position: fixed; inset: 0; z-index: 65; display: grid; place-items: end center; padding: 16px max(16px, env(safe-area-inset-right, 0px)) calc(96px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: rgba(20, 14, 40, 0.28); }
+.pop-card {
+  width: 100%;
+  max-width: 420px;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 20px;
+  background: var(--bg-top);
+  border: 1.5px solid var(--glass-edge);
+  box-shadow: var(--shadow);
+}
+.pop-card .char { width: 92px; height: 86px; }
+.pop-name { font-size: 19px; color: var(--ink-soft); }
+.pop-text { margin: 2px 0 10px; font-family: var(--font-display); font-style: italic; font-size: 22px; line-height: 1.18; overflow-wrap: anywhere; }
+
+.burst { position: fixed; left: 50%; top: 40%; z-index: 70; pointer-events: none; }
+.burst span { position: absolute; font-size: 22px; color: var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .burst span { animation: fly 0.95s ease-out forwards; }
+  @keyframes fly { to { transform: translate(var(--dx), var(--dy)) scale(0.4) rotate(160deg); opacity: 0; } }
+}
+
+/* tabs */
+.tabs {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-top: 1.5px solid var(--glass-edge);
+}
+.tabs-in { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.75fr 1fr 1fr; gap: 4px; }
+.tabs a {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 7px 2px 5px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.tabs a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 75;
+  max-width: calc(100% - 32px);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg-top);
+  font-size: 14px;
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .orb, .tick, .btn, .chip { transition: transform 0.12s ease; }
+  .orb:active, .tick:active, .btn:active, .chip:active { transform: scale(0.94); }
+}
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <header class="hud">
+    <span id="dateLine" class="mono"></span>
+    <div class="hud-r">
+      <button id="claimPill" class="pill hot" type="button" hidden>✦ claim today</button>
+      <span id="ptsPill" class="pill">✦ 0</span>
+      <button id="musicBtn" class="pill" type="button" aria-pressed="false" aria-label="Background music">♪ off</button>
+    </div>
+  </header>
+  <p id="loadNote" class="note" hidden></p>
+  <p id="syncLine" class="note" hidden><button id="syncBtn" class="sync mono" type="button"></button></p>
+
+  <main>
+    <!-- TODAY -->
+    <section id="view-today" class="view">
+      <div class="win">
+        <div class="bar"><span id="charBar">lumi.exe</span><span id="lvlName"></span></div>
+        <div class="body charbody">
+          <div id="charSlot" class="char"></div>
+          <div class="speech">
+            <p id="charSays" class="says"></p>
+            <button id="claimBtn" class="btn" type="button" hidden>claim ✦</button>
+            <div class="xp" aria-hidden="true"><div id="xpFill" class="xp-fill"></div></div>
+            <div id="xpText" class="mono xp-t"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="identity-wrap">
+        <label class="mono tiny" for="identity">who i'm becoming</label>
+        <input id="identity" class="identity" type="text" maxlength="140" autocomplete="off" placeholder="write it like it is already true">
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>right_now.exe</span><span id="nowClock"></span></div>
+        <form id="logForm" class="body">
+          <label class="sr" for="logText">What are you doing right now?</label>
+          <input id="logText" class="field" type="text" autocomplete="off" enterkeyhint="done" placeholder="what am i doing right now?">
+          <div id="moods" class="moods" role="group" aria-label="How do you feel right now"></div>
+          <button class="btn wide" type="submit">log this moment · +2 ✦</button>
+        </form>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>today.log</span><span id="logCount"></span></div>
+        <div class="body" id="timeline"></div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>daily_habits.exe</span><span>last 7 days</span></div>
+        <div class="body" id="habitsToday"></div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>feelings.png</span><span>last 14 days</span></div>
+        <div class="body" id="trend"></div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>countdown.exe</span><a href="#more" class="mono">all dates</a></div>
+        <div class="body" id="nextCd"></div>
+      </div>
+    </section>
+
+    <!-- VISUALISATION -->
+    <section id="view-visualisation" class="view" hidden>
+      <div class="win">
+        <div class="bar"><span>visualisation.exe</span><span id="deckCount"></span></div>
+        <div class="body">
+          <div id="deckChips" class="chips" role="group" aria-label="Slideshows"></div>
+          <form id="newDeckForm" class="btnrow" hidden>
+            <label class="sr" for="newDeckName">Name the new slideshow</label>
+            <input id="newDeckName" class="field" type="text" maxlength="40" autocomplete="off" placeholder="name it: money, body, travel..." style="flex:1;min-width:0">
+            <button class="btn" type="submit">create</button>
+          </form>
+          <button id="playBtn" class="btn wide big" type="button">▶ play fullscreen</button>
+          <button id="addMediaBtn" class="btn ghost" type="button">add pictures or videos</button>
+          <input id="mediaInput" type="file" accept="image/*,video/mp4,video/webm,video/quicktime" multiple hidden>
+          <p class="fine">From Pinterest: open a pin, tap ••• and choose Download image, then add it here. On a laptop, copy any image and paste it on this page. Videos up to 200 MB.</p>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span id="deckBar">slideshow.cfg</span></div>
+        <div class="body">
+          <div class="two">
+            <div>
+              <label class="lbl" for="deckName">name</label>
+              <input id="deckName" class="field" type="text" maxlength="40" autocomplete="off">
+            </div>
+            <div>
+              <label class="lbl" for="autoSel">next slide</label>
+              <select id="autoSel" class="field">
+                <option value="0">when i tap</option>
+                <option value="5">every 5 seconds</option>
+                <option value="8">every 8 seconds</option>
+                <option value="12">every 12 seconds</option>
+              </select>
+            </div>
+          </div>
+          <div class="btnrow">
+            <button id="morningBtn" class="chip" type="button" aria-pressed="false">☀ opens at 6–8 am</button>
+            <span id="deckDel"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="boardGrid"></div>
+    </section>
+
+    <!-- MIND -->
+    <section id="view-mind" class="view" hidden>
+      <div class="win">
+        <div class="bar"><span>psycho_cybernetics.txt</span><span id="ideaNext"></span></div>
+        <div class="body">
+          <div id="ideaNum" class="mono kicker"></div>
+          <h2 id="ideaTitle" class="idea-t"></h2>
+          <p id="ideaBody" class="idea-b"></p>
+          <p class="try"><span class="mono">try this</span><span id="ideaTry"></span></p>
+          <p class="fine"><span id="ideaRef"></span>Written in my own words, not quoted. Page numbers match your copy of The New Psycho-Cybernetics. A new idea every 4 hours.</p>
+          <details><summary>all ideas</summary><ol id="ideaAll"></ol></details>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>my_highlights.txt</span><span id="hlCount"></span></div>
+        <div class="body">
+          <p id="hlNow" class="q"></p>
+          <p id="hlNowRef" class="fine"></p>
+          <form id="hlForm" class="stack">
+            <label class="sr" for="hlText">A line you highlighted</label>
+            <textarea id="hlText" class="field" rows="3" maxlength="600" placeholder="paste a line you highlighted in your copy"></textarea>
+            <label class="sr" for="hlPage">Page</label>
+            <input id="hlPage" class="field" type="text" maxlength="20" autocomplete="off" placeholder="page (optional)">
+            <button class="btn" type="submit">save to my highlights</button>
+          </form>
+          <details><summary>all my highlights</summary><div id="hlList"></div></details>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>power_question.exe</span><span>+5 ✦</span></div>
+        <div class="body">
+          <p id="qText" class="q"></p>
+          <label class="sr" for="qAns">Your answer</label>
+          <textarea id="qAns" class="field" rows="3" placeholder="say it out loud first, then write it here"></textarea>
+          <div class="btnrow">
+            <button id="qSave" class="btn" type="button">save answer</button>
+            <button id="qNext" class="btn ghost" type="button">another question</button>
+          </div>
+          <div id="qToday"></div>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>imagine_higher.mov</span><span id="imNum"></span></div>
+        <div class="body">
+          <p id="imText" class="lead"></p>
+          <div class="btnrow">
+            <button id="imNext" class="btn ghost" type="button">another scene</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MORE -->
+    <section id="view-more" class="view" hidden>
+      <div class="win">
+        <div class="bar"><span>dates.cal</span></div>
+        <div class="body">
+          <form id="cdForm" class="stack">
+            <div class="two">
+              <div>
+                <label class="sr" for="cdLabel">What are you counting down to?</label>
+                <input id="cdLabel" class="field" type="text" maxlength="80" autocomplete="off" placeholder="what are you counting to?" required>
+              </div>
+              <div>
+                <label class="sr" for="cdDate">Date</label>
+                <input id="cdDate" class="field" type="date" required>
+              </div>
+            </div>
+            <button class="btn" type="submit">add countdown</button>
+          </form>
+          <div id="cdList"></div>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>goals.txt</span><span>+50 ✦ each</span></div>
+        <div class="body">
+          <form id="goalForm" class="stack">
+            <label class="sr" for="goalTitle">Goal</label>
+            <input id="goalTitle" class="field" type="text" maxlength="140" autocomplete="off" placeholder="a goal worth saying out loud" required>
+            <label class="sr" for="goalWhy">Why it matters</label>
+            <input id="goalWhy" class="field" type="text" maxlength="200" autocomplete="off" placeholder="why it matters (optional)">
+            <button class="btn" type="submit">add goal</button>
+          </form>
+          <div id="goalList"></div>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>habits.cfg</span><span>+5 ✦ a tick</span></div>
+        <div class="body">
+          <form id="habitForm" class="stack">
+            <label class="sr" for="habitName">Habit</label>
+            <input id="habitName" class="field" type="text" maxlength="80" autocomplete="off" placeholder="add a daily habit (the 3-min timer is built in)" required>
+            <button class="btn" type="submit">add habit</button>
+          </form>
+          <div id="habitList"></div>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>badges.dat</span><span id="badgeCount"></span></div>
+        <div class="body">
+          <div id="badgeGrid" class="badges"></div>
+          <p class="fine">Stardust: claim daily (+10, more on a streak) · log a moment +2 (+1 with a mood) · 3-min visualisation +15 · habit tick +5 · power question +5 · finished goal +50.</p>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>backup.zip</span><span id="bkLast"></span></div>
+        <div class="body">
+          <p class="fine">Everything lives on this phone. Save a backup now and then to Files or iCloud Drive, so nothing is lost if Safari data gets cleared or you change phones.</p>
+          <div class="btnrow">
+            <button id="bkSave" class="btn small" type="button">save a backup</button>
+            <button id="bkLoad" class="btn ghost small" type="button">restore from a backup</button>
+          </div>
+          <input id="bkInput" type="file" accept="application/json,.json" hidden>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>character.cfg</span></div>
+        <div class="body">
+          <div>
+            <label class="lbl" for="charName">name</label>
+            <input id="charName" class="field" type="text" maxlength="24" autocomplete="off">
+          </div>
+          <div class="btnrow">
+            <button id="charArtBtn" class="btn ghost small" type="button">use my own character art</button>
+            <span id="charArtReset"></span>
+          </div>
+          <input id="charArtInput" type="file" accept="image/png,image/webp,image/gif,image/jpeg" hidden>
+          <p class="fine">A square PNG with a transparent background looks best.</p>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>music.cfg</span></div>
+        <div class="body">
+          <div id="musicSeg" class="seg" role="group" aria-label="Background music">
+            <button class="chip" type="button" data-mode="builtin">dream tune</button>
+            <button class="chip" type="button" data-mode="own">my track</button>
+            <button class="chip" type="button" data-mode="off">off</button>
+          </div>
+          <div class="btnrow"><button id="tapBtn" class="chip" type="button" aria-pressed="true">✧ glass tap sounds</button></div>
+          <div>
+            <label class="lbl" for="vol">volume</label>
+            <input id="vol" type="range" min="0" max="1" step="0.05" style="width:100%">
+          </div>
+          <div class="btnrow">
+            <span id="ownLine" class="fine"></span>
+          </div>
+          <div class="btnrow">
+            <button id="ownBtn" class="btn ghost small" type="button">upload my track</button>
+            <span id="ownDel"></span>
+          </div>
+          <input id="ownInput" type="file" accept="audio/*,.mp3,.m4a" hidden>
+          <p class="fine">Music starts after your first tap each time you open the app. "Dream tune" is an original slow ambient loop made for this app: soft pads, glassy bells, a little tape hiss. "My track" plays any MP3 or M4A you own, up to 40 MB.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs" aria-label="Sections">
+    <div class="tabs-in">
+      <a id="tab-today" href="#today">today</a>
+      <a id="tab-visualisation" href="#visualisation">visualisation</a>
+      <a id="tab-mind" href="#mind">mind</a>
+      <a id="tab-more" href="#more">more</a>
+    </div>
+  </nav>
+</div>
+
+<div id="show" class="show" hidden>
+  <div id="showBg" class="show-bg"></div>
+  <div id="showStage" class="stage"></div>
+  <div class="zones">
+    <button id="zonePrev" class="zone" type="button" aria-label="Previous slide"></button>
+    <button id="zoneNext" class="zone" type="button" aria-label="Next slide"></button>
+  </div>
+  <div class="show-top">
+    <div id="showBars" class="bars"></div>
+    <div class="show-head">
+      <span id="showName" class="show-name"></span>
+      <div class="show-btns">
+        <button id="showSound" class="sbtn" type="button" hidden>sound off</button>
+        <button id="showFull" class="sbtn" type="button">full</button>
+        <button id="showClose" class="sbtn" type="button" aria-label="Close slideshow">✕</button>
+      </div>
+    </div>
+  </div>
+  <div id="showTimer" class="show-timer" hidden>
+    <div class="ringbox" id="showRing"><span class="ring-t" data-tm></span></div>
+    <p class="cue" data-cue></p>
+  </div>
+  <div id="showHint" class="show-hint" hidden>tap right for next</div>
+  <div id="showCap" class="show-cap"></div>
+</div>
+
+<div id="pop" class="pop" hidden>
+  <div class="pop-card" role="dialog" aria-modal="true" aria-labelledby="popText">
+    <div id="popChar" class="char"></div>
+    <div>
+      <div id="popName" class="mono pop-name"></div>
+      <p id="popText" class="pop-text"></p>
+      <button id="popOk" class="btn small" type="button">yay</button>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================= content ================= */
+  var MOODS = [
+    { name: "drained", emoji: "🪫" },
+    { name: "foggy", emoji: "🌫️" },
+    { name: "neutral", emoji: "😐" },
+    { name: "happy", emoji: "😊" },
+    { name: "energetic", emoji: "⚡" }
+  ];
+  var LEVELS = ["sleepwalker", "daydreamer", "cloud drifter", "lucid dreamer", "dream weaver", "star chaser", "sky architect", "reality bender", "main character"];
+
+  var IDEAS = [
+    { t: "Your self-image sets the ceiling", b: "Maltz's core claim: you act like the person you believe you are. Change the behaviour without changing the picture of yourself and you slide back. Change the picture and the behaviour follows.", y: "Write one sentence about who you are that is true of the person you're becoming. Read it twice today." },
+    { t: "You run on a goal-seeking machine", b: "He described the brain and nervous system as a servo-mechanism, like a guided missile. Give it a clear target and it steers toward it on its own, correcting as it goes.", y: "Name today's target in one line, clear enough that a stranger could tell when you'd hit it." },
+    { t: "Mistakes are steering, not failure", b: "A missile is off course most of the time and corrects constantly. Errors are feedback. Notice the error, correct, then forget it. Replaying it only teaches the machine the error.", y: "Take one mistake from this week. Write the correction in one line, then let it go." },
+    { t: "The theatre of your mind", b: "Maltz's main exercise: sit quietly, close your eyes and picture yourself acting the way you want to, in detail. He held that your nervous system responds to a vividly imagined experience much like a real one.", y: "Run your 3-minute timer now. Add one detail you've never imagined before: a sound, a smell, a texture." },
+    { t: "About 21 days", b: "He noticed patients took roughly three weeks to get used to a new face, and argued a new self-image needs at least that long. Later research suggests habits often take longer, so treat 21 as the start line, not the finish.", y: "Look at your visualisation streak. Protect it like it's day 1 of 21." },
+    { t: "You were hypnotised by old beliefs", b: "Maltz compared limiting beliefs to hypnosis: someone told you what you can't do, you accepted it, and you've acted it out since. It was never a fact, just a suggestion you agreed with.", y: "Write down one 'I'm just not the kind of person who...' and ask who first said it." },
+    { t: "Happiness is a habit you practise", b: "He treated happiness as a mental habit, not a reward that shows up later. Waiting for 'I'll be happy when...' trains the habit of not being happy now.", y: "Name three small good things about this exact moment. Feel each for a few seconds." },
+    { t: "The SUCCESS type", b: "Maltz spelled SUCCESS as the traits of a healthy self-image: Sense of direction, Understanding, Courage, Charity, Esteem, Self-confidence, Self-acceptance.", y: "Pick your weakest letter today and do one small thing that builds it." },
+    { t: "The FAILURE warning lights", b: "He also spelled FAILURE as warning signs: Frustration, Aggressiveness aimed the wrong way, Insecurity, Loneliness, Uncertainty, Resentment, Emptiness. They aren't who you are. They're signals you've lost the target.", y: "If one is on right now, name it. Then name the goal it's blocking." },
+    { t: "Trying too hard jams the machine", b: "Strain gets in the way. Set the target clearly, then relax and let the mechanism work, the way a forgotten name comes back once you stop forcing it.", y: "Set one problem as a target tonight and sleep on it. Notice what comes to you in the morning." },
+    { t: "Build a quiet room", b: "Maltz suggested building a calm, simple room in your imagination and going there for a few minutes when the day gets loud. You come back steadier.", y: "Design your quiet room: walls, light, one object. Visit it for 60 seconds." },
+    { t: "Borrow your winning feeling", b: "The feeling of past successes is stored in you. Recall one in detail and the confident feeling comes back, ready to carry into something new, even something unrelated.", y: "Remember a time you nailed something. Where were you, what did you hear? Hold it for 30 seconds." },
+    { t: "Act the part", b: "Act as if the new self-image is already true. Each time you act it out, the picture gets more convincing, to you first.", y: "Choose one ordinary task today and do it exactly the way your future self would." },
+    { t: "Emotional scars", b: "As a plastic surgeon he met people whose faces were fixed but who still felt ugly. Old hurts form inner scar tissue that keeps you guarded. Forgiveness, of others and of yourself, is how he said you remove it.", y: "Drop one grudge today, even a small one, for your own sake." },
+    { t: "Let the phone ring", b: "One of his drills: let the phone ring without answering, to practise not reacting to every alarm. Calm is a habit of delaying the automatic response.", y: "Next notification: wait three breaths before you look." },
+    { t: "Fact or assumption?", b: "A lot of fear rests on beliefs nobody checked. Maltz asked whether a belief rests on facts or on an assumption you picked up. Reasoning it through can loosen something that feels permanent.", y: "Take one fear about your plans. Write the evidence for it and against it." },
+    { t: "You're built to chase goals", b: "He saw people as goal-strivers by nature. Without a target the machine idles and you feel flat. It can look like laziness but it's usually a missing target.", y: "If you feel flat today, set a target small enough to hit before dinner." },
+    { t: "Accept the current version", b: "Self-acceptance isn't settling. It means you stop confusing your mistakes with yourself. You can accept who you are right now and still change.", y: "Finish this kindly: 'Right now, I'm someone who...'" },
+    { t: "Worry is imagination aimed wrong", b: "Worry uses the same machinery as visualisation, except you're rehearsing the outcome you don't want. Same tool, wrong target.", y: "Catch one worry and replay it with the best ending instead." },
+    { t: "Practise when nothing is at stake", b: "Rehearse calmly when there's no pressure, the way a shooter practises dry-firing, so the right response is already grooved when the real moment comes.", y: "Rehearse one tricky conversation or pitch in your head, start to finish." },
+    { t: "A crisis can lift you", b: "Pressure can bring out your best if you treat it as a chance to move toward your goal instead of a threat to defend against. The worst realistic outcome is usually survivable.", y: "Name the worst realistic outcome of your scary next step. Then take the step." },
+    { t: "One grain at a time", b: "The book pictures your day as an hourglass: a hundred tasks waiting at the top, but only one grain can pass through the middle at a time. Most hurry and anxiety come from trying to push them all through at once.", y: "Pick the one grain that's in the neck right now. Do only that." },
+    { t: "Stack small wins", b: "The self-image updates on evidence. Small goals you actually hit give it proof that you're someone who follows through.", y: "Tick one habit right now, even the smallest." },
+    { t: "Picture before push", b: "Maltz put imagination ahead of willpower: you move toward the picture you hold. Forcing yourself while picturing failure is a fight you usually lose. Fix the picture first.", y: "Before your next hard task, see yourself finishing it easily for 10 seconds." },
+    { t: "Ease up on yourself", b: "Too much self-criticism makes people inhibited: stiff, self-conscious, hesitant. His fix was to care a bit less: speak without rehearsing, act before it's perfect.", y: "Send, post or say one thing today without editing it three times." },
+    { t: "The area of the possible", b: "Your self-image draws a boundary around what feels possible for someone like you, and results tend to stay inside it. Widen the boundary and your results have room to grow.", y: "Imagine your income, body or work at the next level as simply normal, not lucky." },
+    { t: "Live in the present", b: "The creative mechanism can only act now. Planning helps, but tension about tomorrow doesn't. Do what's in front of you with full attention.", y: "Do the next small task with nothing else open." },
+    { t: "It's never fixed", b: "The whole book rests on one hopeful idea: the self-image can change at any age. You aren't stuck with the picture you were handed.", y: "Open your visualisation and choose one picture to believe a little more today." }
+  ];
+
+  // where each idea lives in The New Psycho-Cybernetics (2001), book page numbers
+  var REFS = ["ch. 1 · p. 3", "ch. 2 · p. 29", "ch. 2 · p. 31", "ch. 3 · p. 53", "ch. 2 · p. 40", "ch. 4 · p. 69", "ch. 7 · p. 117", "ch. 8 · p. 134", "ch. 9 · p. 155", "ch. 6 · p. 114", "ch. 12 · p. 230", "ch. 14 · p. 261", "ch. 3 · p. 64", "ch. 10 · p. 194", "ch. 12 · p. 226", "ch. 5 · p. 87", "ch. 7 · p. 123", "ch. 8 · p. 147", "ch. 6 · p. 101", "ch. 13 · p. 245", "ch. 13 · p. 243", "ch. 6 · p. 112", "", "ch. 3 · p. 43", "ch. 11 · p. 203", "ch. 8 · p. 151", "ch. 6 · p. 110", "ch. 1 · p. 1"];
+
+  var QUESTIONS = [
+    "What would I do today if I knew I couldn't fail?",
+    "What's already working in my life that I haven't celebrated yet?",
+    "If my future self could see me right now, what would she thank me for doing next?",
+    "What would this look like if it were easy?",
+    "What am I most excited about right now, and how can I feel even more of it?",
+    "What would make today a 10 out of 10?",
+    "Where am I playing small, and what would playing big look like in the next hour?",
+    "What would I try if I were twice as bold?",
+    "What story about myself am I ready to stop telling?",
+    "Who do I need to become for my biggest goal to feel normal?",
+    "What's one move I could make in the next 10 minutes that I'd be proud of tonight?",
+    "How would the most confident version of me walk into today?",
+    "What am I grateful for right now that I've been taking for granted?",
+    "What's possible for me now that wasn't possible a year ago?",
+    "If money weren't a worry, what would I create first?",
+    "What would I do differently today if I fully believed in myself?",
+    "What can I enjoy about the process, not just the result?",
+    "Who could I make smile today, and how?",
+    "What's the gift hidden in the thing that's frustrating me right now?",
+    "What do I love about who I'm becoming?",
+    "What am I committed to, no matter what?",
+    "What would make me feel unstoppable this week?",
+    "If I were coaching someone in my exact situation, what would I tell her to do?",
+    "What's the most exciting thing that could happen this month?",
+    "What would I attempt if nobody I knew would ever see it fail?",
+    "What does my body feel like at its absolute best, and can I stand like that right now?",
+    "What's one thing I can stop doing today that would give me more energy?",
+    "How can I make the next hour the best hour of my day?",
+    "What will I celebrate a year from now that I'm starting today?",
+    "What would a bigger version of my goal look like, and why not go for that?",
+    "What am I learning right now that's going to pay off later?",
+    "Who am I when I'm at my best, and how can I be her for the next hour?",
+    "What's one bold message I could send today?",
+    "What would I do today if I already had what I want?",
+    "How can I make this fun?",
+    "What am I proud of that nobody else knows about?"
+  ];
+
+  var IMAGINE = [
+    "It's one year from now and you're waking up somewhere you chose. Notice the light through the window. What's the first sound you hear?",
+    "Your phone buzzes: money just came in while you were asleep. Feel your chest as you read the number. Who do you tell first?",
+    "You walk into a room full of people who already respect your work. How are you standing? What is your face doing?",
+    "You open your laptop in a café in a city you've always wanted to live in. What's on the screen? What are you drinking?",
+    "Someone messages to say your work changed something for them. Read it slowly. What does it say?",
+    "You've kept your promise to yourself for 100 days straight. Look in the mirror. What's different about how you look at yourself?",
+    "You just handed in your notice, calm and ready. Walk out of the building. How does the air feel?",
+    "Picture your body at its strongest and lightest. Run up a long flight of stairs in your mind. Feel how easy it is.",
+    "Picture the people you'll help once you have more. Who's first, and what do you do for them?",
+    "You're giving a friend the tour of the life you built: the room, the routine, the work. Walk her through it.",
+    "It's an ordinary Tuesday five years from now and it's a great day. Walk through it hour by hour.",
+    "The moment your biggest goal becomes real: slow it right down. What's the first thing you do with your hands?",
+    "You're being thanked on a stage for what you built. Hear your name. Feel the warmth in your face.",
+    "Your savings are more than enough. Let your shoulders drop. What do you do with all that ease?",
+    "See yourself saying a calm, confident yes to a big opportunity. What is it, and who's asking?",
+    "You wake up and remember you're already the person you used to picture. What's the first thing you do with that feeling?"
+  ];
+
+  var CUES = [
+    "close your eyes. breathe out slowly.",
+    "see the place. where are you?",
+    "notice what you're wearing, how you stand.",
+    "who's with you? what do they say?",
+    "feel it in your chest. it's already done.",
+    "stay here. add one more detail."
+  ];
+
+  var GREET = [
+    "you came back. that's honestly the whole trick.",
+    "new day, same dream. let's feed it.",
+    "i saved you a seat in the clouds.",
+    "small steps still count as walking.",
+    "the you in the pictures is waiting.",
+    "hi. drink water. then we dream.",
+    "the day hasn't decided what it is yet. you get to."
+  ];
+  var AFTER = [
+    "go make the pictures real. i'll be here.",
+    "see you on the next check-in.",
+    "that's {p} stardust today. keep stacking.",
+    "every tap is evidence. the self-image is watching."
+  ];
+
+  var BADGES = [
+    { id: "first-log", name: "first moment", desc: "log what you're doing", test: function (s) { return s.moments >= 1; } },
+    { id: "login-3", name: "3-day streak", desc: "claim 3 days in a row", test: function (s) { return s.login >= 3; } },
+    { id: "login-7", name: "7-day streak", desc: "claim 7 days in a row", test: function (s) { return s.login >= 7; } },
+    { id: "login-30", name: "30-day streak", desc: "claim 30 days in a row", test: function (s) { return s.login >= 30; } },
+    { id: "viz-1", name: "first show", desc: "finish one 3-minute visualisation", test: function (s) { return s.vizDays >= 1; } },
+    { id: "viz-21", name: "21 days of pictures", desc: "visualise on 21 different days", test: function (s) { return s.vizDays >= 21; } },
+    { id: "board-1", name: "first picture", desc: "add a picture to a slideshow", test: function (s) { return s.media >= 1; } },
+    { id: "answers-10", name: "big questions", desc: "answer 10 power questions", test: function (s) { return s.answers >= 10; } },
+    { id: "goal-1", name: "goal getter", desc: "finish a goal", test: function (s) { return s.goalsDone >= 1; } },
+    { id: "pts-500", name: "500 ✦", desc: "collect 500 stardust", test: function (s) { return s.total >= 500; } },
+    { id: "pts-2000", name: "2000 ✦", desc: "collect 2000 stardust", test: function (s) { return s.total >= 2000; } }
+  ];
+
+  /* ================= helpers ================= */
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function h(tag, props) {
+    var e = document.createElement(tag);
+    var p = props || {};
+    Object.keys(p).forEach(function (k) {
+      var v = p[k];
+      if (k === "class") e.className = v;
+      else if (k === "text") e.textContent = v;
+      else if (k.indexOf("on") === 0) e.addEventListener(k.slice(2), v);
+      else if (v === true) e.setAttribute(k, "");
+      else if (v !== false && v != null) e.setAttribute(k, v);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var kids = [].concat(arguments[i]);
+      for (var j = 0; j < kids.length; j++) {
+        var c = kids[j];
+        if (c == null || c === false) continue;
+        e.append(c.nodeType ? c : document.createTextNode(c));
+      }
+    }
+    return e;
+  }
+  function sv(tag, attrs) {
+    var e = document.createElementNS(SVGNS, tag);
+    Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    return e;
+  }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function uid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); }
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function dkey(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function todayKey() { return dkey(new Date()); }
+  function parseKey(k) { var a = k.split("-").map(Number); return new Date(a[0], a[1] - 1, a[2]); }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function fmtTime(ms) { return new Date(ms).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); }
+  function fmtGap(ms) {
+    var m = Math.round(ms / 60000);
+    if (m < 1) return "+<1m";
+    if (m < 60) return "+" + m + "m";
+    return "+" + Math.floor(m / 60) + "h " + pad(m % 60) + "m";
+  }
+  function fmtLeft(ms) { var m = Math.floor(ms / 60000); return Math.floor(m / 60) + "h " + pad(m % 60) + "m"; }
+  function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function perm(n, seed) { var r = mulberry(seed), a = []; for (var i = 0; i < n; i++) a.push(i); for (var j = n - 1; j > 0; j--) { var k = Math.floor(r() * (j + 1)); var t = a[j]; a[j] = a[k]; a[k] = t; } return a; }
+  var P_IDEA = perm(IDEAS.length, 11), P_Q = perm(QUESTIONS.length, 23), P_IM = perm(IMAGINE.length, 37);
+  function slotIndex() { var d = new Date(); var dn = Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 864e5); return dn * 6 + Math.floor(d.getHours() / 4); }
+  function msToNextSlot() { var d = new Date(), n = new Date(d); n.setHours(Math.floor(d.getHours() / 4) * 4 + 4, 0, 0, 0); return n - d; }
+  function checkIcon() {
+    var s = sv("svg", { viewBox: "0 0 20 20", width: "16", height: "16" });
+    s.append(sv("path", { d: "M4 10.5l4 4 8-9", fill: "none", stroke: "currentColor", "stroke-width": "2.6", "stroke-linecap": "round", "stroke-linejoin": "round" }));
+    return s;
+  }
+  function twoTap(label, action) {
+    var b = h("button", { class: "x", type: "button", text: label });
+    var armed = false, timer;
+    b.addEventListener("click", function () {
+      if (!armed) {
+        armed = true; b.textContent = "sure?"; b.classList.add("armed");
+        timer = setTimeout(function () { armed = false; b.textContent = label; b.classList.remove("armed"); }, 3000);
+      } else { clearTimeout(timer); action(); }
+    });
+    return b;
+  }
+  var toastTimer;
+  function toast(msg) {
+    var t = $("#toast"); t.textContent = msg; t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.hidden = true; }, 3200);
+  }
+  function win(title, right, bodyKids) {
+    return h("div", { class: "win" },
+      h("div", { class: "bar" }, h("span", { text: title }), h("span", { text: right || "" })),
+      h("div", { class: "body" }, bodyKids));
+  }
+  function use(name) {
+    try { return Promise.resolve(window.claude && window.claude.use ? window.claude.use(name) : null).catch(function () { return null; }); }
+    catch (e) { return Promise.resolve(null); }
+  }
+  function lsGet(k, f) { try { var v = localStorage.getItem("daydream-log:pref:" + k); return v == null ? f : v; } catch (e) { return f; } }
+  function lsSet(k, v) { try { localStorage.setItem("daydream-log:pref:" + k, v); } catch (e) {} }
+
+  /* ================= model ================= */
+  var state = null;
+  var days = {};
+  var ready = { state: false, days: false };
+  var picCache = {};
+  var backend = null;
+  var pickedMood = 0;
+  var curDeckId = lsGet("deck", null);
+
+  function blank() {
+    return { v: 2, identity: "", goals: [], habits: [], countdowns: [], decks: [], morningDeck: null, autoSec: 0, charName: "Lumi", charArt: null, music: { mode: "builtin", vol: 0.55, last: "builtin" }, own: null, badgesSeen: null };
+  }
+  var STARTERS = ["Move my body", "One hour on my own thing", "3 minutes picturing who I'm becoming"];
+  function normState(d) {
+    var s = Object.assign(blank(), d ? clone(d) : {});
+    ["goals", "habits", "countdowns", "decks", "quotes"].forEach(function (k) { if (!Array.isArray(s[k])) s[k] = []; });
+    if (Array.isArray(s.vision) && s.vision.length && !s.decks.length) {
+      s.decks.push({ id: "main", name: "my life", items: s.vision.map(function (v) { return Object.assign({ kind: "image" }, v); }) });
+    }
+    delete s.vision; delete s.onboarded;
+    s.habits = s.habits.filter(function (x) { return !x.practice && STARTERS.indexOf(x.name) < 0; });
+    if (!s.decks.length) s.decks.push({ id: "main", name: "my life", items: [] });
+    s.decks.forEach(function (dk) { if (!Array.isArray(dk.items)) dk.items = []; });
+    if (!findDeckIn(s, s.morningDeck)) s.morningDeck = s.decks[0].id;
+    if (!s.music || typeof s.music !== "object") s.music = { mode: "builtin", vol: 0.55, last: "builtin" };
+    if (["builtin", "own", "off"].indexOf(s.music.mode) < 0) s.music.mode = "builtin";
+    if (typeof s.music.vol !== "number") s.music.vol = 0.55;
+    if (typeof s.music.taps !== "boolean") s.music.taps = true;
+    if (!s.charName) s.charName = "Lumi";
+    return s;
+  }
+  function normDay(d) {
+    if (!Array.isArray(d.moments)) d.moments = [];
+    if (!d.habits || typeof d.habits !== "object") d.habits = {};
+    if (!Array.isArray(d.answers)) d.answers = [];
+    return d;
+  }
+  function cloneDay(k) { return days[k] ? clone(days[k]) : { date: k, moments: [], habits: {}, answers: [] }; }
+  state = normState(null);
+  function findDeckIn(s, id) { for (var i = 0; i < s.decks.length; i++) if (s.decks[i].id === id) return s.decks[i]; return null; }
+  function findDeck(id) { return findDeckIn(state, id); }
+  function curDeck() { return findDeck(curDeckId) || findDeck(state.morningDeck) || state.decks[0]; }
+
+  /* ================= saving ================= */
+  var running = {}, dirty = {}, failed = {};
+  function busy(key) { return running[key] || dirty[key]; }
+  function save(key, getVal, writer) {
+    dirty[key] = true;
+    if (running[key]) return;
+    running[key] = true;
+    (async function () {
+      try {
+        while (dirty[key]) {
+          dirty[key] = false;
+          var v = clone(getVal());
+          try { await writer(v); delete failed[key]; setSync(); }
+          catch (e) { failed[key] = true; setSync(); toast(e && e.code === "quota_exceeded" ? "Storage is full." : "Couldn't save that. Tap the note up top to retry."); }
+        }
+      } finally { running[key] = false; }
+    })();
+  }
+  function saveState() { save("state", function () { return state; }, function (v) { return backend.saveState(v); }); }
+  function saveDay(k) { save("day:" + k, function () { return days[k]; }, function (v) { return backend.saveDay(k, v); }); }
+  function setSync() {
+    var line = $("#syncLine"), b = $("#syncBtn");
+    var bad = Object.keys(failed).length > 0;
+    if (bad) { line.hidden = false; b.disabled = false; b.textContent = "unsaved changes · tap to retry"; b.onclick = retryAll; }
+    else if (backend && backend.kind === "local") { line.hidden = false; b.disabled = true; b.textContent = "saved on this device only"; b.onclick = null; }
+    else line.hidden = true;
+  }
+  function retryAll() {
+    Object.keys(failed).forEach(function (k) {
+      if (k === "state") saveState();
+      else if (k.indexOf("day:") === 0) saveDay(k.slice(4));
+    });
+  }
+
+  /* ================= backends ================= */
+  function makeDbBackend(db, userId) {
+    var base = db.doc("data/users/" + userId + "/profile");
+    var dayCol = base.collection("days"), picCol = base.collection("pics"), audCol = base.collection("audio");
+    return {
+      kind: "db",
+      watchState: function (cb, err) { return base.onSnapshot(function (s) { cb(s.exists ? s.data() : null, s.metadata && s.metadata.fromCache); }, err); },
+      watchDays: function (cb, err) { return dayCol.orderBy("date", "desc").limit(1000).onSnapshot(function (q) { cb(q.docs.map(function (d) { return d.data(); }), q.metadata && q.metadata.fromCache); }, err); },
+      saveState: function (s) { return base.set(s); },
+      saveDay: function (k, d) { return dayCol.doc(k).set(d); },
+      getPic: async function (id) { var s = await picCol.doc(id).get(); return s.exists ? s.data().data : null; },
+      savePic: function (id, data) { return picCol.doc(id).set({ data: data }); },
+      delPic: function (id) { return picCol.doc(id).delete(); },
+      putChunk: function (id, i, d) { return audCol.doc(id + "-" + i).set({ d: d }); },
+      getChunk: async function (id, i) { var s = await audCol.doc(id + "-" + i).get(); return s.exists ? s.data().d : null; },
+      delChunk: function (id, i) { return audCol.doc(id + "-" + i).delete(); }
+    };
+  }
+  function makeLocalBackend() {
+    var K = "daydream-log:";
+    function rd(k, f) { try { var v = localStorage.getItem(K + k); return v ? JSON.parse(v) : f; } catch (e) { return f; } }
+    function wr(k, v) { localStorage.setItem(K + k, JSON.stringify(v)); }
+    return {
+      kind: "local",
+      watchState: function (cb) { setTimeout(function () { cb(rd("state", null), false); }, 0); return function () {}; },
+      watchDays: function (cb) {
+        setTimeout(function () {
+          var out = [];
+          try {
+            for (var i = 0; i < localStorage.length; i++) {
+              var key = localStorage.key(i);
+              if (key && key.indexOf(K + "day:") === 0) out.push(JSON.parse(localStorage.getItem(key)));
+            }
+          } catch (e) {}
+          cb(out, false);
+        }, 0);
+        return function () {};
+      },
+      saveState: async function (s) { wr("state", s); },
+      saveDay: async function (k, d) { wr("day:" + k, d); },
+      getPic: async function (id) { return rd("pic:" + id, null); },
+      savePic: async function (id, data) { wr("pic:" + id, data); },
+      delPic: async function (id) { try { localStorage.removeItem(K + "pic:" + id); } catch (e) {} },
+      putChunk: async function () { throw new Error("unsupported"); },
+      getChunk: async function () { return null; },
+      delChunk: async function () {}
+    };
+  }
+
+  /* ================= scoring ================= */
+  function dayPts(d) {
+    var p = 0;
+    if (d.claimed) p += +d.claimed.pts || 0;
+    var m = 0;
+    d.moments.forEach(function (x) { m += 2 + (x.mood ? 1 : 0); });
+    p += Math.min(30, m);
+    Object.keys(d.habits).forEach(function (k) { if (d.habits[k]) p += 5; });
+    if (d.viz) p += 15;
+    p += Math.min(15, d.answers.length * 5);
+    return p;
+  }
+  function claimedOn(k) { return !!(days[k] && days[k].claimed); }
+  function vizOn(k) { return !!(days[k] && days[k].viz); }
+  function runEnding(date, test) { var n = 0, d = new Date(date); while (n < 1000 && test(dkey(d))) { n++; d = addDays(d, -1); } return n; }
+  function liveStreak(test) { var t = new Date(); return test(dkey(t)) ? runEnding(t, test) : runEnding(addDays(t, -1), test); }
+  function score() {
+    var s = { total: 0, today: 0, moments: 0, login: liveStreak(claimedOn), vizDays: 0, media: 0, answers: 0, goalsDone: 0 };
+    var tk = todayKey();
+    Object.keys(days).forEach(function (k) {
+      var d = days[k], p = dayPts(d);
+      s.total += p; if (k === tk) s.today = p;
+      s.moments += d.moments.length; s.answers += d.answers.length;
+      if (d.viz) s.vizDays++;
+    });
+    state.goals.forEach(function (g) { if (g.done) { s.total += 50; s.goalsDone++; } });
+    state.decks.forEach(function (dk) { s.media += dk.items.length; });
+    return s;
+  }
+  function levelOf(total) {
+    var n = 1;
+    while (total >= 25 * n * (n + 1)) n++;
+    return { n: n, cur: 25 * n * (n - 1), nxt: 25 * n * (n + 1), title: LEVELS[Math.min(n - 1, LEVELS.length - 1)] };
+  }
+
+  /* ================= character ================= */
+  function starPath(cx, cy, R, r) {
+    var d = "";
+    for (var i = 0; i < 8; i++) {
+      var a = i * Math.PI / 4 - Math.PI / 2, rad = i % 2 ? r : R;
+      d += (i ? "L" : "M") + (cx + Math.cos(a) * rad).toFixed(1) + " " + (cy + Math.sin(a) * rad).toFixed(1);
+    }
+    return d + "Z";
+  }
+  function charSVG(expr, lv) {
+    var s = sv("svg", { viewBox: "0 0 120 112", class: "char-svg", role: "img", "aria-label": state.charName || "Lumi" });
+    s.append(sv("ellipse", { cx: 60, cy: 106, rx: 30, ry: 4, class: "c-shadow" }));
+    var g = sv("g", { class: "c-float" });
+    if (lv >= 5) g.append(sv("ellipse", { cx: 60, cy: 16, rx: 22, ry: 6, class: "c-halo" }));
+    if (lv >= 3) {
+      g.append(sv("path", { d: "M60 30 Q56 22 62 15", class: "c-line" }));
+      g.append(sv("path", { d: starPath(62, 11, 7, 3), class: "c-star" }));
+    }
+    [[38, 62, 22], [60, 46, 27], [83, 61, 22], [44, 80, 20], [76, 80, 20], [60, 72, 27]].forEach(function (c) {
+      g.append(sv("circle", { cx: c[0], cy: c[1], r: c[2], class: "c-body" }));
+    });
+    g.append(sv("ellipse", { cx: 48, cy: 38, rx: 9, ry: 5, class: "c-shine", transform: "rotate(-24 48 38)" }));
+    if (expr === "happy") {
+      g.append(sv("path", { d: "M42 66 Q48 58 54 66", class: "c-line" }));
+      g.append(sv("path", { d: "M66 66 Q72 58 78 66", class: "c-line" }));
+      g.append(sv("path", { d: "M54 75 Q60 83 66 75", class: "c-line" }));
+    } else if (expr === "sleepy") {
+      g.append(sv("path", { d: "M42 64 Q48 69 54 64", class: "c-line" }));
+      g.append(sv("path", { d: "M66 64 Q72 69 78 64", class: "c-line" }));
+      g.append(sv("path", { d: "M57 77 Q60 79 63 77", class: "c-line" }));
+    } else {
+      [48, 72].forEach(function (x) {
+        g.append(sv("ellipse", { cx: x, cy: 64, rx: 4.2, ry: 5.6, class: "c-eye" }));
+        g.append(sv("circle", { cx: x + 1.4, cy: 62, r: 1.5, class: "c-glint" }));
+      });
+      g.append(sv("path", { d: "M55 76 Q60 81 65 76", class: "c-line" }));
+    }
+    g.append(sv("ellipse", { cx: 40, cy: 74, rx: 6, ry: 3.5, class: "c-cheek" }));
+    g.append(sv("ellipse", { cx: 80, cy: 74, rx: 6, ry: 3.5, class: "c-cheek" }));
+    if (lv >= 7) {
+      [[14, 34, 5], [106, 30, 4], [104, 90, 5], [16, 92, 3.5]].forEach(function (p) { g.append(sv("path", { d: starPath(p[0], p[1], p[2], p[2] * 0.42), class: "c-star" })); });
+    }
+    s.append(g);
+    return s;
+  }
+  function charNode(expr) {
+    var lv = levelOf(score().total).n;
+    if (state.charArt) {
+      var img = h("img", { alt: state.charName || "Lumi" });
+      setMediaSrc(state.charArt, img);
+      return img;
+    }
+    return charSVG(expr, lv);
+  }
+
+  /* ================= popups ================= */
+  var popQueue = [];
+  function say(text, expr) {
+    popQueue.push({ text: text, expr: expr || "happy" });
+    if ($("#pop").hidden) nextPop();
+  }
+  function nextPop() {
+    var p = popQueue.shift();
+    if (!p) { $("#pop").hidden = true; return; }
+    $("#popChar").replaceChildren(charNode(p.expr));
+    $("#popName").textContent = (state.charName || "Lumi").toLowerCase() + " says";
+    $("#popText").textContent = p.text;
+    $("#pop").hidden = false;
+    $("#popOk").focus({ preventScroll: true });
+  }
+  function burst() {
+    if (REDUCED) return;
+    var b = h("div", { class: "burst" });
+    for (var i = 0; i < 14; i++) {
+      var a = (i / 14) * Math.PI * 2, r = 90 + Math.random() * 70;
+      b.append(h("span", { text: "✦", style: "--dx:" + Math.round(Math.cos(a) * r) + "px;--dy:" + Math.round(Math.sin(a) * r) + "px" }));
+    }
+    document.body.append(b);
+    setTimeout(function () { b.remove(); }, 1100);
+  }
+
+  /* ================= actions ================= */
+  function logMoment(text, mood) {
+    var k = todayKey(), d = cloneDay(k);
+    d.moments.push({ id: uid(), t: Date.now(), text: text, mood: mood || 0 });
+    days[k] = d; saveDay(k);
+  }
+  function removeMoment(k, id) {
+    var d = cloneDay(k);
+    d.moments = d.moments.filter(function (m) { return m.id !== id; });
+    days[k] = d; saveDay(k); renderAll();
+  }
+  function toggleHabit(hid) {
+    var k = todayKey(), d = cloneDay(k);
+    d.habits[hid] = !d.habits[hid];
+    days[k] = d; saveDay(k); renderAll();
+  }
+  function claim() {
+    if (!ready.days) { toast("Still loading your stardust. Try again in a second."); return; }
+    var k = todayKey();
+    if (claimedOn(k)) return;
+    var streak = runEnding(addDays(new Date(), -1), claimedOn) + 1;
+    var pts = 10 + Math.min(20, (streak - 1) * 2);
+    var d = cloneDay(k);
+    d.claimed = { t: Date.now(), pts: pts, streak: streak };
+    days[k] = d; saveDay(k);
+    renderAll(); burst();
+    say("+" + pts + " stardust. login streak: " + streak + (streak === 1 ? " day" : " days") + "." + (streak > 1 ? " the bonus grows every day you show up." : " come back tomorrow for a bonus."), "happy");
+  }
+
+  /* ================= media ================= */
+  function setMediaSrc(item, el) {
+    if (item.asset) { el.src = "/_blob/" + item.asset; return; }
+    if (picCache[item.id]) { el.src = picCache[item.id]; return; }
+    backend.getPic(item.id).then(function (data) { if (data) { picCache[item.id] = data; el.src = data; } }).catch(function () {});
+  }
+  async function shrink(file, max, q) {
+    var bmp = await createImageBitmap(file);
+    var r = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    var c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(bmp.width * r)); c.height = Math.max(1, Math.round(bmp.height * r));
+    c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+    return new Promise(function (res, rej) { c.toBlob(function (b) { b ? res(b) : rej(new Error("encode")); }, "image/jpeg", q); });
+  }
+  function toDataURL(blob) {
+    return new Promise(function (res, rej) { var fr = new FileReader(); fr.onload = function () { res(fr.result); }; fr.onerror = rej; fr.readAsDataURL(blob); });
+  }
+  async function storeImage(f, maxDb, maxLocal) {
+    var id = uid();
+    var assets = backend.kind === "db" ? await use("assets") : null;
+    if (assets) {
+      var blob = f, type = "image/gif";
+      if (!(f.type === "image/gif" && f.size <= 20 * 1024 * 1024)) { blob = await shrink(f, maxDb, 0.86); type = "image/jpeg"; }
+      var up = await assets.upload(blob, { type: type });
+      return { id: id, asset: up.id, kind: "image" };
+    }
+    var small = await toDataURL(await shrink(f, maxLocal, 0.72));
+    await backend.savePic(id, small);
+    picCache[id] = small;
+    return { id: id, pic: true, kind: "image" };
+  }
+  async function addMedia(files) {
+    var deckId = curDeck().id;
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      try {
+        var isVid = /^video\//.test(f.type || "") || /\.(mp4|webm|mov|m4v)$/i.test(f.name || "");
+        var item;
+        if (isVid) {
+          var assets = backend.kind === "db" ? await use("assets") : null;
+          if (!assets) { toast("Videos need the synced version of this app."); continue; }
+          if (f.size > 20 * 1024 * 1024) { toast((f.name || "That video") + " is over 20 MB. Trim it and try again."); continue; }
+          toast("Uploading video...");
+          var up = await assets.upload(f, { type: /webm/i.test((f.type || "") + (f.name || "")) ? "video/webm" : "video/mp4" });
+          item = { id: uid(), asset: up.id, kind: "video" };
+        } else {
+          item = await storeImage(f, 1600, 900);
+        }
+        item.caption = "";
+        var dk = findDeck(deckId) || curDeck();
+        dk.items.push(item);
+        saveState(); renderAll();
+      } catch (e) {
+        var why = e && (e.code === "quota_or_state" || e.name === "QuotaExceededError") ? ": storage is full." : (e && e.code === "unsupported_type" ? ": that file type isn't supported." : ".");
+        toast("Couldn't add " + (f.name || "that file") + why);
+      }
+    }
+  }
+  async function forgetMedia(item) {
+    try {
+      if (item.asset) { var a = await use("assets"); if (a) await a.delete(item.asset); }
+      else if (item.pic) await backend.delPic(item.id);
+    } catch (e) {}
+  }
+  function removeItem(deckId, itemId) {
+    var dk = findDeck(deckId); if (!dk) return;
+    var it = dk.items.filter(function (x) { return x.id === itemId; })[0];
+    dk.items = dk.items.filter(function (x) { return x.id !== itemId; });
+    saveState(); renderAll();
+    if (it) forgetMedia(it);
+  }
+
+  /* ================= slideshow ================= */
+  var show = { deckId: null, items: [], i: 0, adv: null, muted: true, viz: false };
+  function openShow(deckId, i, viz) {
+    var dk = findDeck(deckId);
+    if (!dk || !dk.items.length) { toast("Add pictures to this slideshow first."); return false; }
+    show.deckId = deckId; show.items = clone(dk.items); show.i = Math.min(i || 0, dk.items.length - 1); show.viz = !!viz;
+    $("#showName").textContent = dk.name;
+    $("#showTimer").hidden = !viz;
+    $("#show").hidden = false;
+    $("#showFull").hidden = !(document.fullscreenEnabled && $("#show").requestFullscreen);
+    document.body.classList.add("noscroll");
+    if (lsGet("hinted", "") !== "1") { $("#showHint").hidden = false; setTimeout(function () { $("#showHint").hidden = true; }, 2200); lsSet("hinted", "1"); }
+    showSlide(); tTick();
+    return true;
+  }
+  function closeShow() {
+    $("#show").hidden = true;
+    clearTimeout(show.adv);
+    $("#showStage").replaceChildren();
+    document.body.classList.remove("noscroll");
+    show.viz = false;
+    duck(false);
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {});
+  }
+  function slideSec() { var a = +state.autoSec || 0; return show.viz ? Math.max(a, 15) : a; }
+  function showSlide() {
+    clearTimeout(show.adv);
+    var it = show.items[show.i], stage = $("#showStage"), bg = $("#showBg");
+    stage.replaceChildren(); bg.style.backgroundImage = "";
+    var sec = slideSec();
+    $("#showSound").hidden = it.kind !== "video";
+    if (it.kind === "video") {
+      var v = h("video", { playsinline: true, autoplay: true, preload: "auto" });
+      v.muted = show.muted; v.loop = !sec;
+      v.onended = function () { if (sec) step(1); };
+      v.onerror = function () { stage.replaceChildren(h("p", { class: "mono", text: "this video can't play here" })); };
+      setMediaSrc(it, v);
+      stage.append(v);
+      v.play().catch(function () {});
+      duck(!show.muted);
+    } else {
+      var img = h("img", { alt: it.caption || "Visualisation picture" });
+      setMediaSrc(it, img);
+      img.onload = function () { bg.style.backgroundImage = 'url("' + img.src + '")'; };
+      stage.append(img);
+      duck(false);
+      if (sec) show.adv = setTimeout(function () { step(1); }, sec * 1000);
+    }
+    $("#showCap").textContent = it.caption || "";
+    $("#showSound").textContent = show.muted ? "sound off" : "sound on";
+    var bars = $("#showBars"); bars.replaceChildren();
+    show.items.forEach(function (_, j) { bars.append(h("span", { class: j <= show.i ? "on" : "" })); });
+  }
+  function step(n) {
+    if (!show.items.length) return;
+    show.i = (show.i + n + show.items.length) % show.items.length;
+    showSlide();
+  }
+
+  /* ================= visualisation timer ================= */
+  var VIZ_MS = 180000, RC = 2 * Math.PI * 42;
+  var tmr = { left: VIZ_MS, endAt: 0, running: false, int: null, lock: null };
+  function ringSVG() {
+    var s = sv("svg", { viewBox: "0 0 100 100", class: "ring", "aria-hidden": "true" });
+    s.append(sv("circle", { cx: 50, cy: 50, r: 42, fill: "none", class: "ring-bg", "stroke-width": 7 }));
+    s.append(sv("circle", { cx: 50, cy: 50, r: 42, fill: "none", class: "ring-fg", "stroke-width": 7, "stroke-linecap": "round", "stroke-dasharray": RC.toFixed(2), "stroke-dashoffset": RC.toFixed(2), transform: "rotate(-90 50 50)", "data-ring": "" }));
+    return s;
+  }
+  function tStart(withBoard) {
+    audioCtx();
+    if (tmr.left <= 0) tmr.left = VIZ_MS;
+    tmr.endAt = Date.now() + tmr.left; tmr.running = true;
+    clearInterval(tmr.int); tmr.int = setInterval(tTick, 250);
+    try { if (navigator.wakeLock) navigator.wakeLock.request("screen").then(function (l) { tmr.lock = l; }).catch(function () {}); } catch (e) {}
+    if (withBoard) {
+      var dk = findDeck(state.morningDeck);
+      if (!dk || !dk.items.length) dk = state.decks.filter(function (x) { return x.items.length; })[0];
+      if (!dk || !openShow(dk.id, 0, true)) toast("Your slideshows are empty, so it's eyes-closed mode.");
+    }
+    tTick();
+  }
+  function release() { try { if (tmr.lock) tmr.lock.release(); } catch (e) {} tmr.lock = null; }
+  function tPause() { if (!tmr.running) return; tmr.left = Math.max(0, tmr.endAt - Date.now()); tmr.running = false; clearInterval(tmr.int); release(); tTick(); }
+  function tReset() { tPause(); tmr.left = VIZ_MS; tTick(); }
+  function tTick() {
+    var left = tmr.running ? Math.max(0, tmr.endAt - Date.now()) : tmr.left;
+    var secs = Math.ceil(left / 1000);
+    $$("[data-tm]").forEach(function (e) { e.textContent = Math.floor(secs / 60) + ":" + pad(secs % 60); });
+    $$("[data-ring]").forEach(function (e) { e.setAttribute("stroke-dashoffset", (RC * (left / VIZ_MS)).toFixed(2)); });
+    var started = tmr.running || left < VIZ_MS;
+    var cue = started ? CUES[Math.min(CUES.length - 1, Math.floor((VIZ_MS - left) / 30000))] : "see it as already done.";
+    $$("[data-cue]").forEach(function (e) { e.textContent = cue; });
+    var go = $("#tGo"); if (go) go.textContent = tmr.running ? "pause" : (started ? "resume" : "start");
+    if (tmr.running && left <= 0) tDone();
+  }
+  function tDone() {
+    tmr.running = false; clearInterval(tmr.int); tmr.left = VIZ_MS; release();
+    chime();
+    var k = todayKey(), first = !vizOn(k);
+    if (first) { var d = cloneDay(k); d.viz = { t: Date.now() }; days[k] = d; saveDay(k); }
+    if (show.viz) { show.viz = false; $("#showTimer").hidden = true; }
+    renderAll(); burst();
+    say(first ? "3 minutes in the theatre of your mind. +15 stardust." : "another round in the theatre. that's how the picture gets real.", "happy");
+  }
+
+  /* ================= audio ================= */
+  var AC = null, master = null, bus = null, delayIn = null, noiseBuf = null, gestured = false, bgmNow = null, bgmOwnId = null, seqInt = null, ownSrc = null, ownBuf = { id: null, buf: null }, verbIn = null, fx = null, ambOut = null;
+  function audioCtx() {
+    if (!AC) {
+      var C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return null;
+      try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+      try { AC = new C(); } catch (e) { return null; }
+      master = AC.createGain(); master.gain.value = volFor(); master.connect(AC.destination);
+      bus = AC.createGain(); bus.gain.value = 1; bus.connect(master);
+      delayIn = AC.createGain(); delayIn.gain.value = 1;
+      var dl = AC.createDelay(1); dl.delayTime.value = 0.3;
+      var fb = AC.createGain(); fb.gain.value = 0.3;
+      var wet = AC.createGain(); wet.gain.value = 0.5;
+      delayIn.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(bus);
+      var verb = AC.createConvolver(), len = Math.floor(AC.sampleRate * 4.5), imp = AC.createBuffer(2, len, AC.sampleRate);
+      for (var c = 0; c < 2; c++) { var dd = imp.getChannelData(c); for (var q = 0; q < len; q++) dd[q] = (Math.random() * 2 - 1) * Math.pow(1 - q / len, 2.6); }
+      verb.buffer = imp;
+      var vg = AC.createGain(); vg.gain.value = 0.9; verb.connect(vg); vg.connect(master);
+      verbIn = AC.createGain(); verbIn.connect(verb);
+      var bs = AC.createGain(); bs.gain.value = 0.6; bus.connect(bs); bs.connect(verbIn);
+      fx = AC.createGain(); fx.connect(master);
+      var fs = AC.createGain(); fs.gain.value = 0.7; fx.connect(fs); fs.connect(verbIn);
+      noiseBuf = AC.createBuffer(1, AC.sampleRate * 2, AC.sampleRate);
+      var ch = noiseBuf.getChannelData(0); for (var i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
+    }
+    if (AC.state === "suspended") AC.resume().catch(function () {});
+    return AC;
+  }
+  function volFor() { return Math.max(0, Math.min(1, +state.music.vol)) * 0.6; }
+  function mtof(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+  function voice(type, m, t, dur, g, send, cutoff) {
+    var o = AC.createOscillator(); o.type = type; o.frequency.value = mtof(m);
+    var e = AC.createGain(); e.gain.setValueAtTime(0.0001, t); e.gain.exponentialRampToValueAtTime(g, t + 0.012); e.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    var node = o;
+    if (cutoff) { var f = AC.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = cutoff; o.connect(f); node = f; }
+    node.connect(e); e.connect(bus);
+    if (send) { var s = AC.createGain(); s.gain.value = send; e.connect(s); s.connect(delayIn); }
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  function sweep(f0, f1, t, dur, g, send) {
+    var o = AC.createOscillator(); o.type = "sine";
+    o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    var e = AC.createGain(); e.gain.setValueAtTime(g, t); e.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(e); e.connect(bus);
+    if (send) { var s = AC.createGain(); s.gain.value = send; e.connect(s); s.connect(delayIn); }
+    o.start(t); o.stop(t + dur + 0.02);
+  }
+  function hat(t) {
+    var n = AC.createBufferSource(); n.buffer = noiseBuf;
+    var f = AC.createBiquadFilter(); f.type = "highpass"; f.frequency.value = 7500;
+    var e = AC.createGain(); e.gain.setValueAtTime(0.035, t); e.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+    n.connect(f); f.connect(e); e.connect(bus); n.start(t); n.stop(t + 0.05);
+  }
+  // original ambient loop: Fmaj7 · Am7 · Dm9 · Bbmaj7(#11), slow pads, glass bells, tape hiss
+  var CHORDS = [[41, [57, 60, 64, 67]], [45, [55, 60, 64, 69]], [38, [53, 57, 60, 64]], [46, [57, 62, 64, 65]]];
+  var BELLS = [77, 79, 81, 84, 86, 89, 91, 93];
+  var CH_SEC = 7.5;
+  var amb = { i: 0, nextT: 0, hiss: null };
+  function padNote(m, t, dur, g) {
+    var f = AC.createBiquadFilter(); f.type = "lowpass"; f.Q.value = 0.4;
+    f.frequency.setValueAtTime(700, t); f.frequency.linearRampToValueAtTime(1300, t + dur / 2); f.frequency.linearRampToValueAtTime(800, t + dur + 3);
+    var e = AC.createGain(); e.gain.setValueAtTime(0.0001, t); e.gain.exponentialRampToValueAtTime(g, t + 2.6); e.gain.setValueAtTime(g, t + dur - 0.3); e.gain.exponentialRampToValueAtTime(0.0001, t + dur + 3.2);
+    f.connect(e); e.connect(ambOut);
+    [-8, 8].forEach(function (dt) {
+      var o = AC.createOscillator(); o.type = "sawtooth"; o.frequency.value = mtof(m);
+      o.detune.setValueAtTime(dt, t); o.detune.linearRampToValueAtTime(dt + (Math.random() * 10 - 5), t + dur + 3);
+      o.connect(f); o.start(t); o.stop(t + dur + 3.4);
+    });
+  }
+  function subNote(m, t, dur, g) {
+    var o = AC.createOscillator(); o.type = "sine"; o.frequency.value = mtof(m);
+    var e = AC.createGain(); e.gain.setValueAtTime(0.0001, t); e.gain.exponentialRampToValueAtTime(g, t + 1.8); e.gain.setValueAtTime(g, t + dur - 0.3); e.gain.exponentialRampToValueAtTime(0.0001, t + dur + 2);
+    o.connect(e); e.connect(ambOut); o.start(t); o.stop(t + dur + 2.2);
+  }
+  function bell(m, t, g) {
+    [[1, 1], [2.01, 0.22], [3.02, 0.07]].forEach(function (p) {
+      var o = AC.createOscillator(); o.type = "sine"; o.frequency.value = mtof(m) * p[0];
+      var e = AC.createGain(); e.gain.setValueAtTime(0.0001, t); e.gain.exponentialRampToValueAtTime(g * p[1], t + 0.015); e.gain.exponentialRampToValueAtTime(0.0001, t + 3 / p[0]);
+      o.connect(e); e.connect(ambOut);
+      var s = AC.createGain(); s.gain.value = 0.4; e.connect(s); s.connect(delayIn);
+      o.start(t); o.stop(t + 3.1);
+    });
+  }
+  function schedChord(t) {
+    var ch = CHORDS[amb.i % CHORDS.length];
+    ch[1].forEach(function (m) { padNote(m, t, CH_SEC, 0.026); });
+    subNote(ch[0], t, CH_SEC, 0.12);
+    for (var k = 0; k < 16; k++) if (Math.random() < 0.17) bell(BELLS[Math.floor(Math.random() * BELLS.length)], t + k * (CH_SEC / 16) + Math.random() * 0.12, 0.045);
+    amb.i++;
+  }
+  function startBuiltin() {
+    if (!audioCtx()) return;
+    ambOut = AC.createGain(); ambOut.gain.setValueAtTime(0.0001, AC.currentTime); ambOut.gain.exponentialRampToValueAtTime(1, AC.currentTime + 2); ambOut.connect(bus);
+    var hs = AC.createBufferSource(); hs.buffer = noiseBuf; hs.loop = true;
+    var hf = AC.createBiquadFilter(); hf.type = "lowpass"; hf.frequency.value = 2600;
+    var hg = AC.createGain(); hg.gain.value = 0.012;
+    hs.connect(hf); hf.connect(hg); hg.connect(ambOut); hs.start();
+    amb.hiss = hs; amb.i = 0; amb.nextT = AC.currentTime + 0.1;
+    clearInterval(seqInt);
+    seqInt = setInterval(function () { while (amb.nextT < AC.currentTime + 1.2) { schedChord(amb.nextT); amb.nextT += CH_SEC; } }, 250);
+    bgmNow = "builtin";
+  }
+  function stopMusic() {
+    clearInterval(seqInt); seqInt = null;
+    if (ambOut) {
+      var o = ambOut, h0 = amb.hiss;
+      o.gain.cancelScheduledValues(AC.currentTime); o.gain.setTargetAtTime(0.0001, AC.currentTime, 0.4);
+      setTimeout(function () { try { if (h0) h0.stop(); o.disconnect(); } catch (e) {} }, 2500);
+      ambOut = null; amb.hiss = null;
+    }
+    if (ownSrc) { try { ownSrc.stop(); } catch (e) {} ownSrc = null; }
+    bgmNow = null; bgmOwnId = null;
+  }
+  var TAPN = [77, 79, 81, 84, 86, 89];
+  function glass(m, t, g) {
+    [[1, 1], [2.76, 0.16]].forEach(function (p) {
+      var o = AC.createOscillator(); o.type = "sine"; o.frequency.value = mtof(m) * p[0];
+      var e = AC.createGain(); e.gain.setValueAtTime(0.0001, t); e.gain.exponentialRampToValueAtTime(g * p[1], t + 0.006); e.gain.exponentialRampToValueAtTime(0.0001, t + 1.1 / p[0]);
+      o.connect(e); e.connect(fx); o.start(t); o.stop(t + 1.2);
+    });
+  }
+  function tapSound(kind, n) {
+    if (!state.music.taps || !AC || AC.state !== "running") return;
+    var t = AC.currentTime + 0.005;
+    if (kind === "up") [0, 2, 4].forEach(function (j, i) { glass(TAPN[j], t + i * 0.08, 0.09); });
+    else if (kind === "mood") glass(TAPN[n] || TAPN[0], t, 0.09);
+    else if (kind === "soft") glass(TAPN[Math.floor(Math.random() * 3)] - 12, t, 0.05);
+    else glass(TAPN[Math.floor(Math.random() * TAPN.length)], t, 0.07);
+  }
+  function decode(ab) { return new Promise(function (res, rej) { AC.decodeAudioData(ab, res, rej); }); }
+  function b64ToBytes(b) { var s = atob(b), u = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+  function bytesToB64(u) { var s = ""; for (var i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); }
+  async function startOwn() {
+    var own = state.own; if (!own || !audioCtx()) return;
+    bgmNow = "own"; bgmOwnId = own.id;
+    try {
+      if (ownBuf.id !== own.id) {
+        var parts = [], total = 0;
+        for (var i = 0; i < own.n; i++) {
+          var b = await backend.getChunk(own.id, i);
+          if (b == null) throw new Error("missing");
+          var u = b64ToBytes(b); parts.push(u); total += u.length;
+        }
+        var all = new Uint8Array(total), off = 0;
+        parts.forEach(function (p) { all.set(p, off); off += p.length; });
+        ownBuf = { id: own.id, buf: await decode(all.buffer) };
+      }
+      if (bgmNow !== "own" || bgmOwnId !== own.id) return;
+      var src = AC.createBufferSource(); src.buffer = ownBuf.buf; src.loop = true; src.connect(bus); src.start();
+      ownSrc = src;
+    } catch (e) { toast("Your track couldn't load. Playing the dream tune instead."); stopMusic(); startBuiltin(); }
+  }
+  function applyMusic() {
+    var want = gestured && ready.state ? state.music.mode : "off";
+    if (want === "own" && !state.own) want = "builtin";
+    if (master) master.gain.setTargetAtTime(volFor(), AC.currentTime, 0.05);
+    if (want === "off") { if (bgmNow) stopMusic(); return; }
+    if (want === bgmNow && (want !== "own" || bgmOwnId === state.own.id)) return;
+    stopMusic();
+    if (want === "builtin") startBuiltin(); else startOwn();
+  }
+  function duck(on) { if (bus && AC) bus.gain.setTargetAtTime(on ? 0.12 : 1, AC.currentTime, 0.2); }
+  function chime() {
+    var c = audioCtx(); if (!c) return;
+    var t = c.currentTime + 0.02;
+    [84, 88, 91, 96].forEach(function (m, i) {
+      var o = c.createOscillator(); o.type = "sine"; o.frequency.value = mtof(m);
+      var e = c.createGain(); e.gain.setValueAtTime(0.0001, t + i * 0.14); e.gain.exponentialRampToValueAtTime(0.2, t + i * 0.14 + 0.01); e.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.14 + 1.4);
+      o.connect(e); e.connect(c.destination); if (verbIn) e.connect(verbIn); o.start(t + i * 0.14); o.stop(t + i * 0.14 + 1.5);
+    });
+  }
+  var primed = false;
+  function unlock(ev) {
+    if (ev && ev.type === "pointerdown" && ev.pointerType === "touch") return;
+    gestured = true;
+    var c = audioCtx();
+    if (c && !primed) { try { var sb = c.createBufferSource(); sb.buffer = c.createBuffer(1, 1, 22050); sb.connect(c.destination); sb.start(0); primed = true; } catch (e) {} }
+    if (c && c.state !== "running") c.resume().catch(function () {});
+    applyMusic();
+  }
+  async function uploadOwn(file) {
+    if (backend.kind !== "db") { toast("Your own track needs the synced version of this app."); return; }
+    if (file.size > 6 * 1024 * 1024) { toast("That file is over 6 MB. Try a shorter or smaller MP3."); return; }
+    if (!audioCtx()) { toast("Audio isn't available in this browser."); return; }
+    var ab = await file.arrayBuffer();
+    try { await decode(ab.slice(0)); } catch (e) { toast("That file can't play here. Try an MP3."); return; }
+    toast("Saving your track...");
+    var bytes = new Uint8Array(ab), id = uid(), CH = 150000, n = Math.ceil(bytes.length / CH);
+    try {
+      for (var i = 0; i < n; i++) await backend.putChunk(id, i, bytesToB64(bytes.subarray(i * CH, (i + 1) * CH)));
+    } catch (e) { toast("Couldn't save the track" + (e && e.code === "quota_exceeded" ? ": storage is full." : ".")); for (var j = 0; j < n; j++) backend.delChunk(id, j).catch(function () {}); return; }
+    var old = state.own;
+    state.own = { id: id, n: n, name: (file.name || "my track").replace(/\.[^.]+$/, "").slice(0, 60) };
+    state.music.mode = "own"; state.music.last = "own";
+    saveState(); renderAll(); toast("Track saved.");
+    if (old) for (var k = 0; k < old.n; k++) backend.delChunk(old.id, k).catch(function () {});
+  }
+  function removeOwn() {
+    var old = state.own; if (!old) return;
+    state.own = null;
+    if (state.music.mode === "own") state.music.mode = "builtin";
+    state.music.last = "builtin";
+    saveState(); renderAll();
+    for (var k = 0; k < old.n; k++) backend.delChunk(old.id, k).catch(function () {});
+  }
+
+  /* ================= rendering ================= */
+  var lastLevel = null, seenMem = null, lastSlot = null, qOverride = null, imOverride = null;
+  function renderAll() {
+    var sc = score();
+    renderHud(sc); renderChar(sc); renderTimeline(); renderHabitsToday(); renderTrend(); renderNextCd();
+    renderDecks(); renderBoard(); renderMind(); renderGoals(); renderHabitList(); renderCountdowns(); renderBadges(sc); renderSettings();
+    var idn = $("#identity"); if (document.activeElement !== idn) idn.value = state.identity || "";
+    tTick(); cdTick();
+    applyMusic();
+    checkProgress(sc);
+  }
+
+  function renderHud(sc) {
+    var claimed = claimedOn(todayKey());
+    $("#claimPill").hidden = !(ready.days && !claimed);
+    $("#ptsPill").textContent = "✦ " + sc.total;
+    var on = state.music.mode !== "off";
+    $("#musicBtn").textContent = on ? "♪ on" : "♪ off";
+    $("#musicBtn").setAttribute("aria-pressed", String(on));
+  }
+
+  function renderChar(sc) {
+    var k = todayKey(), claimed = claimedOn(k), lv = levelOf(sc.total);
+    var name = (state.charName || "Lumi");
+    $("#charBar").textContent = name.toLowerCase().replace(/\s+/g, "_") + ".exe";
+    $("#lvlName").textContent = "lv " + lv.n + " · " + lv.title;
+    $("#charSlot").replaceChildren(charNode(claimed ? "happy" : (ready.days ? "sleepy" : "normal")));
+    var dayN = Math.floor(parseKey(k).getTime() / 864e5);
+    var hr = new Date().getHours();
+    var says;
+    if (!ready.days) says = "waking up...";
+    else if (!claimed) says = (hr >= 5 && hr < 11 ? "good morning. " : hr >= 22 || hr < 5 ? "late check-in still counts. " : "") + GREET[dayN % GREET.length];
+    else says = AFTER[dayN % AFTER.length].replace("{p}", sc.today);
+    $("#charSays").textContent = says;
+    var streak = runEnding(addDays(new Date(), -1), claimedOn) + 1;
+    var cb = $("#claimBtn");
+    cb.hidden = !(ready.days && !claimed);
+    cb.textContent = "claim +" + (10 + Math.min(20, (streak - 1) * 2)) + " ✦" + (streak > 1 ? " · day " + streak : "");
+    var pct = Math.min(100, ((sc.total - lv.cur) / (lv.nxt - lv.cur)) * 100);
+    $("#xpFill").style.width = pct.toFixed(1) + "%";
+    $("#xpText").textContent = "today +" + sc.today + " ✦ · " + (lv.nxt - sc.total) + " to lv " + (lv.n + 1) + " · login streak " + sc.login;
+  }
+
+  function renderTimeline() {
+    var k = todayKey(), box = $("#timeline"); box.replaceChildren();
+    var list = (days[k] ? days[k].moments : []).slice().sort(function (a, b) { return a.t - b.t; });
+    $("#logCount").textContent = list.length + (list.length === 1 ? " entry" : " entries");
+    if (!list.length) { box.append(h("p", { class: "empty", text: "Nothing logged yet today. Write the first thing you're doing." })); return; }
+    list.map(function (m, i) {
+      var gap = i > 0 ? fmtGap(m.t - list[i - 1].t) : "";
+      var md = m.mood ? MOODS[m.mood - 1] : null;
+      return h("div", { class: "moment" },
+        h("div", { class: "stamp" }, fmtTime(m.t), gap ? h("small", { text: gap }) : null),
+        h("div", { class: "said" }, md ? h("span", { class: "em", title: md.name, text: md.emoji }) : null, h("span", { text: m.text || md.name })),
+        twoTap("remove", function () { removeMoment(k, m.id); }));
+    }).reverse().forEach(function (n) { box.append(n); });
+  }
+
+  function pipsFor(test) {
+    var out = [];
+    for (var i = 6; i >= 0; i--) out.push(h("span", { class: "pip" + (test(dkey(addDays(new Date(), -i))) ? " on" : "") }));
+    return h("span", { class: "pips" }, out);
+  }
+  function renderHabitsToday() {
+    var box = $("#habitsToday"); box.replaceChildren();
+    var tk = todayKey(), vs = liveStreak(vizOn), done = vizOn(tk);
+    var rb = h("div", { class: "ringbox" }, ringSVG(), h("span", { class: "ring-t", "data-tm": "" }));
+    box.append(h("div", { class: "viz" }, rb,
+      h("div", { class: "grow", style: "display:grid;gap:8px" },
+        h("div", { class: "title", text: "3-minute visualisation" + (done ? " ✓" : "") }),
+        h("p", { class: "cue", "data-cue": "" }),
+        h("div", { class: "btnrow" },
+          h("button", { id: "tGo", class: "btn small", type: "button", onclick: function () { tmr.running ? tPause() : tStart(false); } }, "start"),
+          h("button", { class: "btn ghost small", type: "button", onclick: function () { tStart(true); } }, "with my pictures"),
+          h("button", { class: "x", type: "button", onclick: tReset }, "reset")),
+        h("div", { class: "meta" }, pipsFor(vizOn), h("span", { text: vs >= 21 ? "21 of 21 ✓ keep going" : "day " + vs + " of 21" }), h("span", { text: done ? "+15 ✦ earned" : "+15 ✦" })))));
+    state.habits.forEach(function (hb) {
+      var s = liveStreak(function (k) { return !!(days[k] && days[k].habits[hb.id]); });
+      var on = !!(days[tk] && days[tk].habits[hb.id]);
+      box.append(h("div", { class: "row" },
+        h("button", { class: "tick", type: "button", "aria-pressed": String(on), "aria-label": "Done today: " + hb.name, onclick: function () { toggleHabit(hb.id); } }, checkIcon()),
+        h("div", { class: "grow" }, h("div", { class: "title", text: hb.name }),
+          h("div", { class: "meta" }, pipsFor(function (k) { return !!(days[k] && days[k].habits[hb.id]); }), h("span", { text: s ? s + (s === 1 ? " day" : " days") : "no streak yet" })))));
+    });
+    if (!state.habits.length) box.append(h("p", { class: "fine" }, "Want more daily habits? ", h("a", { href: "#more", text: "Add them on the more tab." })));
+  }
+
+  function dayMood(k) {
+    var d = days[k]; if (!d) return 0;
+    var m = d.moments.filter(function (x) { return x.mood; });
+    if (!m.length) return 0;
+    return Math.round(m.reduce(function (a, x) { return a + x.mood; }, 0) / m.length);
+  }
+  function renderTrend() {
+    var box = $("#trend"); box.replaceChildren();
+    var wrap = h("div", { class: "trend" }), letters = ["S", "M", "T", "W", "T", "F", "S"], any = false;
+    for (var i = 13; i >= 0; i--) {
+      var d = addDays(new Date(), -i), m = dayMood(dkey(d));
+      if (m) any = true;
+      wrap.append(h("div", { class: "day" },
+        h("span", { class: "dot" + (m ? "" : " none"), style: m ? "--c:var(--mood" + m + ")" : null, title: d.toDateString() + (m ? " · " + MOODS[m - 1].name : "") }, m ? MOODS[m - 1].emoji : ""),
+        h("span", { class: "mono", text: letters[d.getDay()] })));
+    }
+    box.append(wrap);
+    if (!any) box.append(h("p", { class: "empty", text: "Pick a feeling when you log a moment and your last two weeks fill in here." }));
+  }
+
+  function cdTarget(c) { return parseKey(c.date).getTime(); }
+  function cdBlock(c) {
+    var t = String(cdTarget(c));
+    return h("div", { class: "cd" },
+      h("span", { class: "cd-d", "data-cd": t, "data-kind": "d" }),
+      h("span", { class: "cd-u", "data-cd": t, "data-kind": "u" }),
+      h("span", { class: "cd-t", "data-cd": t, "data-kind": "t" }));
+  }
+  function renderNextCd() {
+    var box = $("#nextCd"); box.replaceChildren();
+    var now = Date.now();
+    var next = state.countdowns.filter(function (c) { return cdTarget(c) > now; }).sort(function (a, b) { return cdTarget(a) - cdTarget(b); })[0];
+    if (!next) { box.append(h("p", { class: "empty", text: "No date to count toward yet. Add one on the more tab." })); return; }
+    box.append(h("div", { class: "cd-label", text: next.label }), cdBlock(next));
+  }
+  function cdTick() {
+    var now = Date.now();
+    $$("[data-cd]").forEach(function (el) {
+      var t = +el.dataset.cd, kind = el.dataset.kind, diff = t - now, n;
+      if (kind === "d") {
+        if (diff > 0) el.textContent = String(Math.floor(diff / 864e5));
+        else { n = Math.floor(-diff / 864e5); el.textContent = n === 0 ? "today" : String(n); }
+      } else if (kind === "u") {
+        if (diff > 0) { n = Math.floor(diff / 864e5); el.textContent = n === 1 ? "day to go" : "days to go"; }
+        else { n = Math.floor(-diff / 864e5); el.textContent = n === 0 ? "" : (n === 1 ? "day ago" : "days ago"); }
+      } else {
+        if (diff > 0) { var r = diff % 864e5; el.textContent = pad(Math.floor(r / 36e5)) + ":" + pad(Math.floor((r % 36e5) / 6e4)) + ":" + pad(Math.floor((r % 6e4) / 1e3)); }
+        else el.textContent = "";
+      }
+    });
+  }
+
+  /* --- visualisation tab --- */
+  function renderDecks() {
+    var dk = curDeck(); curDeckId = dk.id;
+    var chips = $("#deckChips"); chips.replaceChildren();
+    state.decks.forEach(function (d) {
+      chips.append(h("button", { class: "chip", type: "button", "aria-pressed": String(d.id === dk.id), onclick: function () { curDeckId = d.id; lsSet("deck", d.id); renderAll(); } },
+        (d.id === state.morningDeck ? "☀ " : "") + d.name + " · " + d.items.length));
+    });
+    chips.append(h("button", { class: "chip", type: "button", onclick: function () { var f = $("#newDeckForm"); f.hidden = !f.hidden; if (!f.hidden) $("#newDeckName").focus(); } }, "+ new"));
+    $("#deckCount").textContent = state.decks.length + (state.decks.length === 1 ? " slideshow" : " slideshows");
+    $("#deckBar").textContent = dk.name.toLowerCase().replace(/\s+/g, "_") + ".cfg";
+    if (document.activeElement !== $("#deckName")) $("#deckName").value = dk.name;
+    $("#autoSel").value = String(state.autoSec || 0);
+    var mb = $("#morningBtn"); mb.setAttribute("aria-pressed", String(state.morningDeck === dk.id));
+    var del = $("#deckDel"); del.replaceChildren();
+    if (state.decks.length > 1) del.append(twoTap("delete this slideshow", function () {
+      var gone = findDeck(dk.id); if (!gone) return;
+      state.decks = state.decks.filter(function (x) { return x.id !== dk.id; });
+      if (state.morningDeck === dk.id) state.morningDeck = state.decks[0].id;
+      curDeckId = state.decks[0].id; lsSet("deck", curDeckId);
+      saveState(); renderAll();
+      gone.items.forEach(forgetMedia);
+    }));
+  }
+  var boardSig = "";
+  function renderBoard() {
+    var ae = document.activeElement;
+    if (ae && ae.classList && ae.classList.contains("cap")) return;
+    var dk = curDeck(), sig = dk.id + "|" + JSON.stringify(dk.items);
+    var box = $("#boardGrid");
+    if (sig === boardSig && box.childNodes.length) return;
+    boardSig = sig; box.replaceChildren();
+    if (!dk.items.length) {
+      box.append(win("empty.jpg", "", [h("p", { class: "empty", text: "Nothing in " + dk.name + " yet. Add pictures that feel like the life you want: places, rooms, people, a number on a screen." })]));
+      return;
+    }
+    var grid = h("div", { class: "board" });
+    dk.items.forEach(function (item, idx) {
+      var media;
+      if (item.kind === "video") { media = h("video", { muted: true, playsinline: true, preload: "metadata" }); media.muted = true; }
+      else media = h("img", { alt: item.caption || "Visualisation picture", loading: "lazy" });
+      setMediaSrc(item, media);
+      var cap = h("input", { class: "cap", type: "text", maxlength: "90", placeholder: "add a line", "aria-label": "Caption", value: item.caption || "", onchange: function (e) {
+        var d = findDeck(dk.id); if (!d) return;
+        d.items.forEach(function (x) { if (x.id === item.id) x.caption = e.target.value.trim(); });
+        saveState();
+      } });
+      grid.append(h("figure", { class: "tile" },
+        h("button", { class: "thumb", type: "button", "aria-label": "Play from here", onclick: function () { openShow(dk.id, idx, false); } }, media, item.kind === "video" ? h("span", { class: "play", text: "▶ video" }) : null),
+        cap,
+        twoTap("remove", function () { removeItem(dk.id, item.id); })));
+    });
+    box.append(grid);
+  }
+
+  /* --- mind tab --- */
+  function renderMind() {
+    var slot = slotIndex();
+    if (slot !== lastSlot) { lastSlot = slot; qOverride = null; imOverride = null; }
+    var ii = P_IDEA[slot % IDEAS.length], idea = IDEAS[ii];
+    $("#ideaNum").textContent = "idea " + (ii + 1) + " of " + IDEAS.length;
+    $("#ideaTitle").textContent = idea.t;
+    $("#ideaBody").textContent = idea.b;
+    $("#ideaTry").textContent = idea.y;
+    $("#ideaRef").textContent = REFS[ii] ? "Read the full section: " + REFS[ii] + ". " : "";
+    $("#ideaNext").textContent = "next in " + fmtLeft(msToNextSlot());
+    var qi = qOverride != null ? qOverride : P_Q[slot % QUESTIONS.length];
+    $("#qText").textContent = QUESTIONS[qi];
+    var im = imOverride != null ? imOverride : P_IM[slot % IMAGINE.length];
+    $("#imText").textContent = IMAGINE[im];
+    $("#imNum").textContent = "scene " + (im + 1) + " of " + IMAGINE.length;
+    var qs = state.quotes || [];
+    $("#hlCount").textContent = qs.length + (qs.length === 1 ? " line" : " lines");
+    if (qs.length) {
+      var cur = qs[slot % qs.length];
+      $("#hlNow").textContent = cur.text;
+      $("#hlNowRef").textContent = (cur.page ? "p. " + cur.page + " · " : "") + (qs.length > 1 ? "a different one every 4 hours" : "add more and they'll rotate");
+    } else {
+      $("#hlNow").textContent = "";
+      $("#hlNowRef").textContent = "Lines you save here show up one at a time, changing every 4 hours along with the idea above.";
+    }
+    var hl = $("#hlList"); hl.replaceChildren();
+    qs.forEach(function (x) {
+      hl.append(h("div", { class: "row" },
+        h("div", { class: "grow" }, h("div", { text: x.text }), x.page ? h("div", { class: "why", text: "p. " + x.page }) : null),
+        twoTap("remove", function () { state.quotes = state.quotes.filter(function (y) { return y.id !== x.id; }); saveState(); renderAll(); })));
+    });
+    var list = $("#qToday"); list.replaceChildren();
+    var ans = days[todayKey()] ? days[todayKey()].answers : [];
+    ans.slice().reverse().forEach(function (a) { list.append(h("div", { class: "ans" }, h("b", { text: a.q }), a.a)); });
+  }
+
+  /* --- more tab --- */
+  function renderGoals() {
+    var box = $("#goalList"); box.replaceChildren();
+    if (!state.goals.length) { box.append(h("p", { class: "empty", text: "No goals yet. Write one you'd be proud to say out loud." })); return; }
+    state.goals.slice().sort(function (a, b) { return (a.done ? 1 : 0) - (b.done ? 1 : 0); }).forEach(function (g) {
+      box.append(h("div", { class: "row" + (g.done ? " done" : "") },
+        h("button", { class: "tick", type: "button", "aria-pressed": String(!!g.done), "aria-label": "Mark done: " + g.title, onclick: function () {
+          g.done = !g.done; saveState(); renderAll(); if (g.done) { burst(); say("goal finished. +50 stardust. the picture just got more real.", "happy"); }
+        } }, checkIcon()),
+        h("div", { class: "grow" }, h("div", { class: "title", text: g.title }), g.why ? h("div", { class: "why", text: g.why }) : null),
+        twoTap("remove", function () { state.goals = state.goals.filter(function (x) { return x.id !== g.id; }); saveState(); renderAll(); })));
+    });
+  }
+  function renderHabitList() {
+    var box = $("#habitList"); box.replaceChildren();
+    if (!state.habits.length) { box.append(h("p", { class: "empty", text: "Habits you add show up on the today tab under the timer, with a one-tap check." })); return; }
+    state.habits.forEach(function (hb) {
+      box.append(h("div", { class: "row" },
+        h("div", { class: "grow" }, h("div", { class: "title", text: hb.name })),
+        twoTap("remove", function () { state.habits = state.habits.filter(function (x) { return x.id !== hb.id; }); saveState(); renderAll(); })));
+    });
+  }
+  function renderCountdowns() {
+    var box = $("#cdList"); box.replaceChildren();
+    if (!state.countdowns.length) { box.append(h("p", { class: "empty", text: "Add a date you're moving toward. The seconds tick live." })); return; }
+    var now = Date.now();
+    var fut = state.countdowns.filter(function (c) { return cdTarget(c) > now; }).sort(function (a, b) { return cdTarget(a) - cdTarget(b); });
+    var past = state.countdowns.filter(function (c) { return cdTarget(c) <= now; }).sort(function (a, b) { return cdTarget(b) - cdTarget(a); });
+    fut.concat(past).forEach(function (c) {
+      box.append(h("div", { class: "cd-row" + (cdTarget(c) <= now ? " past" : "") },
+        h("div", { class: "cd-head" }, h("div", { class: "cd-label", text: c.label }), twoTap("remove", function () { state.countdowns = state.countdowns.filter(function (x) { return x.id !== c.id; }); saveState(); renderAll(); })),
+        cdBlock(c),
+        h("div", { class: "cd-when", text: parseKey(c.date).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short", year: "numeric" }) })));
+    });
+  }
+  function seenList() { return Array.isArray(state.badgesSeen) ? state.badgesSeen : (seenMem || []); }
+  function renderBadges(sc) {
+    var grid = $("#badgeGrid"); grid.replaceChildren();
+    var seen = seenList(), n = 0;
+    BADGES.forEach(function (b) {
+      var on = b.test(sc) || seen.indexOf(b.id) >= 0; if (on) n++;
+      grid.append(h("div", { class: "badge-c " + (on ? "on" : "off") }, h("span", { class: "bn", text: (on ? "✦ " : "· ") + b.name }), h("span", { class: "bd", text: b.desc })));
+    });
+    $("#badgeCount").textContent = n + " of " + BADGES.length;
+  }
+  function renderSettings() {
+    if (document.activeElement !== $("#charName")) $("#charName").value = state.charName || "Lumi";
+    var cr = $("#charArtReset"); cr.replaceChildren();
+    if (state.charArt) cr.append(twoTap("go back to the default", function () { var old = state.charArt; state.charArt = null; saveState(); renderAll(); forgetMedia(old); }));
+    $$("#musicSeg .chip").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === state.music.mode)); });
+    $("#tapBtn").setAttribute("aria-pressed", String(!!state.music.taps));
+    if (document.activeElement !== $("#vol")) $("#vol").value = String(state.music.vol);
+    $("#ownLine").textContent = state.own ? "my track: " + state.own.name : "no track uploaded yet";
+    var od = $("#ownDel"); od.replaceChildren();
+    if (state.own) od.append(twoTap("remove track", removeOwn));
+  }
+
+  function checkProgress(sc) {
+    if (!(ready.state && ready.days)) return;
+    var lv = levelOf(sc.total);
+    var earned = BADGES.filter(function (b) { return b.test(sc); }).map(function (b) { return b.id; });
+    if (lastLevel === null) {
+      lastLevel = lv.n;
+      if (!Array.isArray(state.badgesSeen)) seenMem = earned.slice();
+      return;
+    }
+    if (lv.n > lastLevel) { burst(); say("level up! you're a " + lv.title + " now (lv " + lv.n + "). i'm floating a little higher too.", "happy"); }
+    lastLevel = lv.n;
+    var seen = seenList();
+    var fresh = earned.filter(function (id) { return seen.indexOf(id) < 0; });
+    if (fresh.length) {
+      state.badgesSeen = seen.concat(fresh);
+      saveState();
+      fresh.forEach(function (id) { var b = BADGES.filter(function (x) { return x.id === id; })[0]; say("new badge: " + b.name + ". " + b.desc + " ✓", "happy"); });
+    }
+  }
+
+  /* ================= routing ================= */
+  var VIEWS = ["today", "visualisation", "mind", "more"];
+  var ALIAS = { board: "visualisation", goals: "more", countdown: "more" };
+  var currentView = "today";
+  function route() {
+    var v = location.hash.slice(1);
+    v = ALIAS[v] || v;
+    currentView = VIEWS.indexOf(v) >= 0 ? v : "today";
+    VIEWS.forEach(function (n) {
+      $("#view-" + n).hidden = n !== currentView;
+      $("#tab-" + n).setAttribute("aria-current", n === currentView ? "page" : "false");
+    });
+    window.scrollTo(0, 0);
+  }
+
+  /* ================= wiring ================= */
+  function buildMoods() {
+    var box = $("#moods");
+    MOODS.forEach(function (m, i) {
+      var b = h("button", { class: "orb", type: "button", style: "--c:var(--mood" + (i + 1) + ")", "aria-pressed": "false", "aria-label": m.name, onclick: function () {
+        pickedMood = pickedMood === i + 1 ? 0 : i + 1;
+        tapSound("mood", i);
+        $$(".orb", box).forEach(function (o, j) { o.setAttribute("aria-pressed", String(pickedMood === j + 1)); });
+      } }, m.emoji);
+      box.append(h("div", { class: "mood" }, b, h("span", { class: "mono", text: m.name })));
+    });
+  }
+  function wire() {
+    ["pointerdown", "touchend", "click", "keydown"].forEach(function (ev) { document.addEventListener(ev, unlock, true); });
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest("button, a");
+      if (!b || b.classList.contains("orb")) return;
+      var kind = "tap";
+      if (b.id === "claimBtn" || b.id === "claimPill" || (b.classList.contains("tick") && b.getAttribute("aria-pressed") !== "true")) kind = "up";
+      else if (b.classList.contains("zone")) kind = "soft";
+      tapSound(kind);
+    }, true);
+    document.addEventListener("visibilitychange", function () {
+      if (!AC) return;
+      if (document.hidden) AC.suspend().catch(function () {});
+      else if (gestured) AC.resume().catch(function () {});
+    });
+    window.addEventListener("pageshow", function () { if (AC && gestured) AC.resume().catch(function () {}); });
+    document.addEventListener("focusin", function (e) { if (e.target.matches && e.target.matches("input[type=text], input:not([type]), textarea")) document.body.classList.add("typing"); });
+    document.addEventListener("focusout", function () { setTimeout(function () { var a = document.activeElement; if (!(a && a.matches && a.matches("input[type=text], input:not([type]), textarea"))) document.body.classList.remove("typing"); }, 60); });
+
+    $("#logForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = $("#logText"), text = input.value.trim();
+      if (!text && !pickedMood) { toast("Write what you're doing, or pick a feeling."); return; }
+      logMoment(text, pickedMood);
+      input.value = ""; pickedMood = 0; $$("#moods .orb").forEach(function (o) { o.setAttribute("aria-pressed", "false"); });
+      renderAll();
+    });
+    $("#identity").addEventListener("change", function (e) { state.identity = e.target.value.trim(); saveState(); });
+    $("#claimBtn").addEventListener("click", claim);
+    $("#claimPill").addEventListener("click", claim);
+    $("#musicBtn").addEventListener("click", function () {
+      if (state.music.mode === "off") state.music.mode = state.music.last && state.music.last !== "off" ? state.music.last : "builtin";
+      else { state.music.last = state.music.mode; state.music.mode = "off"; }
+      saveState(); renderAll();
+    });
+
+    $("#popOk").addEventListener("click", nextPop);
+    $("#pop").addEventListener("click", function (e) { if (e.target.id === "pop") nextPop(); });
+
+    // visualisation
+    $("#newDeckForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var n = $("#newDeckName").value.trim(); if (!n) return;
+      var d = { id: uid(), name: n, items: [] };
+      state.decks.push(d); curDeckId = d.id; lsSet("deck", d.id);
+      $("#newDeckName").value = ""; e.target.hidden = true;
+      saveState(); renderAll();
+    });
+    $("#deckName").addEventListener("change", function (e) { var d = curDeck(), v = e.target.value.trim(); if (v) { d.name = v; saveState(); renderAll(); } });
+    $("#autoSel").addEventListener("change", function (e) { state.autoSec = +e.target.value || 0; saveState(); });
+    $("#morningBtn").addEventListener("click", function () { state.morningDeck = curDeck().id; saveState(); renderAll(); toast(curDeck().name + " now opens at 6–8 am."); });
+    $("#playBtn").addEventListener("click", function () { openShow(curDeck().id, 0, false); });
+    $("#addMediaBtn").addEventListener("click", function () { $("#mediaInput").click(); });
+    $("#mediaInput").addEventListener("change", function (e) { var f = Array.prototype.slice.call(e.target.files || []); e.target.value = ""; if (f.length) addMedia(f); });
+    document.addEventListener("paste", function (e) {
+      if (currentView !== "visualisation" || !$("#show").hidden) return;
+      var files = Array.prototype.slice.call((e.clipboardData && e.clipboardData.files) || []).filter(function (f) { return /^image\//.test(f.type); });
+      if (files.length) { e.preventDefault(); addMedia(files); }
+    });
+    var vv = $("#view-visualisation");
+    vv.addEventListener("dragover", function (e) { e.preventDefault(); vv.classList.add("dropping"); });
+    vv.addEventListener("dragleave", function (e) { if (e.target === vv) vv.classList.remove("dropping"); });
+    vv.addEventListener("drop", function (e) {
+      e.preventDefault(); vv.classList.remove("dropping");
+      var files = Array.prototype.slice.call((e.dataTransfer && e.dataTransfer.files) || []).filter(function (f) { return /^(image|video)\//.test(f.type); });
+      if (files.length) addMedia(files); else toast("Save the image first, then drop the file here.");
+    });
+
+    // slideshow
+    var sw = null;
+    $("#show").addEventListener("touchstart", function (e) { var t = e.touches[0]; sw = { x: t.clientX, y: t.clientY, at: Date.now() }; }, { passive: true });
+    $("#show").addEventListener("touchend", function (e) {
+      if (!sw) return;
+      var t = e.changedTouches[0], dx = t.clientX - sw.x, dy = t.clientY - sw.y; sw = null;
+      if (Math.abs(dy) > 90 && dy > 0 && Math.abs(dy) > Math.abs(dx)) { e.preventDefault(); closeShow(); }
+      else if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) { e.preventDefault(); step(dx < 0 ? 1 : -1); }
+    });
+    $("#zoneNext").addEventListener("click", function () { step(1); });
+    $("#zonePrev").addEventListener("click", function () { step(-1); });
+    $("#showClose").addEventListener("click", closeShow);
+    $("#showSound").addEventListener("click", function () {
+      show.muted = !show.muted;
+      var v = $("#showStage video"); if (v) { v.muted = show.muted; v.play().catch(function () {}); }
+      $("#showSound").textContent = show.muted ? "sound off" : "sound on";
+      duck(!show.muted);
+    });
+    $("#showFull").addEventListener("click", function () {
+      var el = $("#show");
+      if (document.fullscreenElement) { document.exitFullscreen().catch(function () {}); return; }
+      if (el.requestFullscreen) el.requestFullscreen().catch(function () { toast("Fullscreen isn't available here."); });
+    });
+    $("#showRing").prepend(ringSVG());
+    document.addEventListener("keydown", function (e) {
+      if (!$("#pop").hidden && e.key === "Escape") { nextPop(); return; }
+      if ($("#show").hidden) return;
+      if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "Escape") closeShow();
+    });
+
+    // mind
+    $("#qSave").addEventListener("click", function () {
+      var a = $("#qAns").value.trim();
+      if (!a) { toast("Answer it first, even one line."); return; }
+      var k = todayKey(), d = cloneDay(k);
+      var got = d.answers.length < 3;
+      d.answers.push({ id: uid(), q: $("#qText").textContent, a: a, t: Date.now() });
+      days[k] = d; saveDay(k);
+      $("#qAns").value = "";
+      toast(got ? "Saved. +5 stardust." : "Saved. (Stardust for answers caps at 3 a day.)");
+      renderAll();
+    });
+    $("#qNext").addEventListener("click", function () {
+      var cur = QUESTIONS.indexOf($("#qText").textContent), n;
+      do { n = Math.floor(Math.random() * QUESTIONS.length); } while (n === cur);
+      qOverride = n; renderMind();
+    });
+    $("#imNext").addEventListener("click", function () {
+      var cur = IMAGINE.indexOf($("#imText").textContent), n;
+      do { n = Math.floor(Math.random() * IMAGINE.length); } while (n === cur);
+      imOverride = n; renderMind();
+    });
+    $("#hlForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var t = $("#hlText").value.trim(); if (!t) { toast("Paste a line first."); return; }
+      state.quotes.push({ id: uid(), text: t, page: $("#hlPage").value.trim() });
+      e.target.reset(); saveState(); renderAll(); toast("Saved to your highlights.");
+    });
+    var all = $("#ideaAll");
+    IDEAS.forEach(function (x) { all.append(h("li", { text: x.t })); });
+
+    // more
+    $("#goalForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var t = $("#goalTitle").value.trim(); if (!t) return;
+      state.goals.push({ id: uid(), title: t, why: $("#goalWhy").value.trim(), done: false });
+      e.target.reset(); saveState(); renderAll();
+    });
+    $("#habitForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var t = $("#habitName").value.trim(); if (!t) return;
+      state.habits.push({ id: uid(), name: t });
+      e.target.reset(); saveState(); renderAll();
+    });
+    $("#cdForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var l = $("#cdLabel").value.trim(), d = $("#cdDate").value;
+      if (!l || !d) return;
+      state.countdowns.push({ id: uid(), label: l, date: d });
+      e.target.reset(); saveState(); renderAll();
+    });
+    $("#charName").addEventListener("change", function (e) { state.charName = e.target.value.trim() || "Lumi"; saveState(); renderAll(); });
+    $("#charArtBtn").addEventListener("click", function () { $("#charArtInput").click(); });
+    $("#charArtInput").addEventListener("change", async function (e) {
+      var f = e.target.files && e.target.files[0]; e.target.value = "";
+      if (!f) return;
+      try {
+        var old = state.charArt, item;
+        var assets = backend.kind === "db" ? await use("assets") : null;
+        if (assets) {
+          var type = /^image\/(png|webp|gif)$/.test(f.type) ? f.type : "image/png";
+          var blob = f.size > 4 * 1024 * 1024 && f.type !== "image/gif" ? await shrink(f, 600, 0.9) : f;
+          if (blob !== f) type = "image/jpeg";
+          var up = await assets.upload(blob, { type: type });
+          item = { id: uid(), asset: up.id };
+        } else {
+          var id = uid(), data = await toDataURL(f.size > 300 * 1024 ? await shrink(f, 400, 0.85) : f);
+          await backend.savePic(id, data); picCache[id] = data;
+          item = { id: id, pic: true };
+        }
+        state.charArt = item; saveState(); renderAll(); toast("Character updated.");
+        if (old) forgetMedia(old);
+      } catch (err) { toast("Couldn't use that image."); }
+    });
+    $$("#musicSeg .chip").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var m = b.dataset.mode;
+        if (m === "own" && !state.own) { toast("Upload a track first."); return; }
+        state.music.mode = m; if (m !== "off") state.music.last = m;
+        saveState(); renderAll();
+      });
+    });
+    var volTimer;
+    $("#vol").addEventListener("input", function (e) {
+      state.music.vol = +e.target.value;
+      if (master) master.gain.setTargetAtTime(volFor(), AC.currentTime, 0.05);
+      clearTimeout(volTimer); volTimer = setTimeout(saveState, 600);
+    });
+    $("#ownBtn").addEventListener("click", function () { $("#ownInput").click(); });
+    $("#tapBtn").addEventListener("click", function () { state.music.taps = !state.music.taps; saveState(); renderAll(); });
+    $("#ownInput").addEventListener("change", function (e) { var f = e.target.files && e.target.files[0]; e.target.value = ""; if (f) uploadOwn(f); });
+
+    window.addEventListener("hashchange", route);
+  }
+
+  function clock() {
+    var d = new Date();
+    $("#dateLine").textContent = d.toLocaleDateString([], { weekday: "short", day: "2-digit", month: "short" }).toUpperCase();
+    $("#nowClock").textContent = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    if (slotIndex() !== lastSlot) renderMind(); else $("#ideaNext").textContent = "next in " + fmtLeft(msToNextSlot());
+    var k = todayKey();
+    if (clock.day && clock.day !== k) renderAll();
+    clock.day = k;
+  }
+
+  /* ================= on-device storage (home-screen app) ================= */
+  var IDB = (function () {
+    var dbp = null;
+    function open() {
+      if (!dbp) dbp = new Promise(function (res, rej) {
+        var r = indexedDB.open("daydream", 1);
+        r.onupgradeneeded = function () { r.result.createObjectStore("files"); };
+        r.onsuccess = function () { res(r.result); };
+        r.onerror = function () { rej(r.error); };
+      });
+      return dbp;
+    }
+    function tx(mode, fn) {
+      return open().then(function (d) {
+        return new Promise(function (res, rej) {
+          var t = d.transaction("files", mode), req = fn(t.objectStore("files"));
+          t.oncomplete = function () { res(req ? req.result : undefined); };
+          t.onerror = function () { rej(t.error); };
+          t.onabort = function () { rej(t.error); };
+        });
+      });
+    }
+    return {
+      get: function (k) { return tx("readonly", function (s) { return s.get(k); }); },
+      put: function (k, v) { return tx("readwrite", function (s) { s.put(v, k); }); },
+      del: function (k) { return tx("readwrite", function (s) { s.delete(k); }); },
+      keys: function () { return tx("readonly", function (s) { return s.getAllKeys(); }); }
+    };
+  })();
+  function makeDeviceBackend() {
+    var b = makeLocalBackend();
+    b.kind = "device";
+    b.getPic = function (id) { return IDB.get("p:" + id).then(function (v) { return v || null; }); };
+    b.savePic = function (id, d) { return IDB.put("p:" + id, d); };
+    b.delPic = function (id) { return IDB.del("p:" + id); };
+    return b;
+  }
+  var urlCache = {};
+  function setMediaSrc(item, el) {
+    if (item.blob) {
+      if (urlCache[item.id]) { el.src = urlCache[item.id]; return; }
+      IDB.get("m:" + item.id).then(function (b) { if (b) { urlCache[item.id] = URL.createObjectURL(b); el.src = urlCache[item.id]; } }).catch(function () {});
+      return;
+    }
+    if (item.asset) { el.src = "/_blob/" + item.asset; return; }
+    if (picCache[item.id]) { el.src = picCache[item.id]; return; }
+    backend.getPic(item.id).then(function (data) { if (data) { picCache[item.id] = data; el.src = data; } }).catch(function () {});
+  }
+  async function addMedia(files) {
+    var deckId = curDeck().id;
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      try {
+        var isVid = /^video\//.test(f.type || "") || /\.(mp4|webm|mov|m4v)$/i.test(f.name || "");
+        var id = uid(), item;
+        if (isVid) {
+          if (f.size > 200 * 1024 * 1024) { toast((f.name || "That video") + " is over 200 MB. Trim it first."); continue; }
+          toast("Saving video...");
+          await IDB.put("m:" + id, f);
+          item = { id: id, blob: true, kind: "video" };
+        } else {
+          var blob = f.type === "image/gif" ? f : await shrink(f, 1800, 0.88);
+          await IDB.put("m:" + id, blob);
+          item = { id: id, blob: true, kind: "image" };
+        }
+        item.caption = "";
+        var dk = findDeck(deckId) || curDeck();
+        dk.items.push(item);
+        saveState(); renderAll();
+      } catch (e) {
+        toast("Couldn't add " + (f.name || "that file") + (e && e.name === "QuotaExceededError" ? ": storage for this app is full." : "."));
+      }
+    }
+  }
+  async function forgetMedia(item) {
+    try {
+      if (item.blob) { await IDB.del("m:" + item.id); if (urlCache[item.id]) { URL.revokeObjectURL(urlCache[item.id]); delete urlCache[item.id]; } }
+      else if (item.pic) await backend.delPic(item.id);
+    } catch (e) {}
+  }
+  async function uploadOwn(file) {
+    if (file.size > 40 * 1024 * 1024) { toast("That file is over 40 MB."); return; }
+    if (!audioCtx()) { toast("Audio isn't available here."); return; }
+    var ab = await file.arrayBuffer();
+    try { await decode(ab.slice(0)); } catch (e) { toast("That file can't play here. Try an MP3 or M4A."); return; }
+    var id = uid();
+    try { await IDB.put("a:" + id, file); } catch (e) { toast("Couldn't save the track."); return; }
+    var old = state.own;
+    state.own = { id: id, n: 0, blob: true, name: (file.name || "my track").replace(/\.[^.]+$/, "").slice(0, 60) };
+    state.music.mode = "own"; state.music.last = "own";
+    saveState(); renderAll(); toast("Track saved.");
+    if (old) IDB.del("a:" + old.id).catch(function () {});
+  }
+  async function startOwn() {
+    var own = state.own; if (!own || !audioCtx()) return;
+    bgmNow = "own"; bgmOwnId = own.id;
+    try {
+      if (ownBuf.id !== own.id) {
+        var b = await IDB.get("a:" + own.id);
+        if (!b) throw new Error("missing");
+        ownBuf = { id: own.id, buf: await decode(await b.arrayBuffer()) };
+      }
+      if (bgmNow !== "own" || bgmOwnId !== own.id) return;
+      var src = AC.createBufferSource(); src.buffer = ownBuf.buf; src.loop = true; src.connect(bus); src.start();
+      ownSrc = src;
+    } catch (e) { toast("Your track couldn't load. Playing the dream tune instead."); stopMusic(); startBuiltin(); }
+  }
+  function removeOwn() {
+    var old = state.own; if (!old) return;
+    state.own = null;
+    if (state.music.mode === "own") state.music.mode = "builtin";
+    state.music.last = "builtin";
+    saveState(); renderAll();
+    IDB.del("a:" + old.id).catch(function () {});
+  }
+  function showLastBackup() {
+    var t = +lsGet("lastBackup", 0);
+    if (!t) { $("#bkLast").textContent = "never backed up"; return; }
+    var d = Math.floor((Date.now() - t) / 864e5);
+    $("#bkLast").textContent = "last: " + (d === 0 ? "today" : d === 1 ? "yesterday" : d + " days ago");
+  }
+  async function exportBackup() {
+    toast("Packing your backup...");
+    try {
+      var files = {}, keys = await IDB.keys();
+      for (var i = 0; i < keys.length; i++) {
+        var v = await IDB.get(keys[i]);
+        files[keys[i]] = v instanceof Blob ? { blob: await toDataURL(v) } : { str: v };
+      }
+      var data = { app: "daydream-log", v: 2, at: Date.now(), state: state, days: days, files: files };
+      var blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+      var name = "daydream-backup-" + todayKey() + ".json";
+      var file = new File([blob], name, { type: "application/json" });
+      var done = false;
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: "Daydream backup" }); done = true; }
+        catch (e) { if (e && e.name === "AbortError") return; }
+      }
+      if (!done) {
+        var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+        document.body.append(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 5000);
+      }
+      lsSet("lastBackup", String(Date.now())); showLastBackup();
+    } catch (e) { toast("Couldn't make the backup."); }
+  }
+  async function importBackup(file) {
+    try {
+      var data = JSON.parse(await file.text());
+      if (!data || data.app !== "daydream-log") throw new Error("not ours");
+      toast("Restoring...");
+      var keys = Object.keys(data.files || {});
+      for (var i = 0; i < keys.length; i++) {
+        var f = data.files[keys[i]];
+        var v = f.blob ? await (await fetch(f.blob)).blob() : f.str;
+        await IDB.put(keys[i], v);
+      }
+      localStorage.setItem("daydream-log:state", JSON.stringify(data.state));
+      Object.keys(data.days || {}).forEach(function (k) { localStorage.setItem("daydream-log:day:" + k, JSON.stringify(data.days[k])); });
+      toast("Restored. Reloading...");
+      setTimeout(function () { location.reload(); }, 700);
+    } catch (e) { toast("That file isn't a Daydream backup."); }
+  }
+  function wireDevice() {
+    showLastBackup();
+    $("#bkSave").addEventListener("click", exportBackup);
+    $("#bkLoad").addEventListener("click", function () { $("#bkInput").click(); });
+    $("#bkInput").addEventListener("change", function (e) { var f = e.target.files && e.target.files[0]; e.target.value = ""; if (f) importBackup(f); });
+  }
+
+  /* ================= boot ================= */
+  async function boot() {
+    var hr = new Date().getHours();
+    var morning = hr >= 6 && hr < 8;
+    if (morning) { if (location.hash !== "#visualisation") location.hash = "visualisation"; }
+    buildMoods(); wire(); route(); clock(); renderAll();
+    setInterval(clock, 20000);
+    setInterval(cdTick, 1000);
+
+    var loadNote = $("#loadNote"), firstState = true;
+    var timer = setTimeout(function () {
+      if (!(ready.state && ready.days)) { loadNote.textContent = "Still reaching your saved data. What you add now may not be saved yet."; loadNote.hidden = false; }
+    }, 10000);
+    function checkReady() { if (ready.state && ready.days) { clearTimeout(timer); loadNote.hidden = true; } }
+    function onErr(err) {
+      clearTimeout(timer);
+      loadNote.textContent = "Your saved data can't be reached right now (" + ((err && err.code) || "error") + "). New entries stay on this screen until it reconnects.";
+      loadNote.hidden = false;
+    }
+
+    backend = makeDeviceBackend();
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+    if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(function () {});
+    wireDevice();
+    setSync();
+
+    backend.watchState(function (data, fromCache) {
+      if (!busy("state")) state = normState(data);
+      if (!fromCache) ready.state = true;
+      checkReady(); renderAll();
+      if (firstState && ready.state) {
+        firstState = false;
+        if (morning && currentView === "visualisation") {
+          var dk = findDeck(state.morningDeck);
+          if (dk && dk.items.length) openShow(dk.id, 0, false);
+        }
+      }
+    }, onErr);
+    backend.watchDays(function (list, fromCache) {
+      var next = {};
+      list.forEach(function (d) { if (d && d.date) next[d.date] = normDay(clone(d)); });
+      Object.keys(days).forEach(function (k) { if (busy("day:" + k)) next[k] = days[k]; });
+      days = next;
+      if (!fromCache) ready.days = true;
+      checkReady(); renderAll();
+    }, onErr);
+  }
+  boot();
+})();
+</script>
+
+</body>
+</html>
