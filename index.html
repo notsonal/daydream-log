@@ -556,6 +556,12 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
 .show-timer .cue { font-size: 16px; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7); }
 .show-hint { position: absolute; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 20px; padding: 8px 14px; border-radius: 999px; background: rgba(10, 8, 24, 0.55); pointer-events: none; white-space: nowrap; }
 
+.prac { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; padding: calc(24px + env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px)); background: linear-gradient(180deg, var(--bg-top), var(--bg-mid) 55%, var(--bg-low)); }
+.prac-in { width: 100%; max-width: 440px; display: grid; gap: 20px; justify-items: center; text-align: center; }
+.prac .ringbox { width: 150px; height: 150px; }
+.prac .ring-t { font-size: 40px; }
+.prac .q { min-height: 3.4em; }
+
 /* popup */
 .pop { position: fixed; inset: 0; z-index: 65; display: grid; place-items: end center; padding: 16px max(16px, env(safe-area-inset-right, 0px)) calc(96px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: rgba(20, 14, 40, 0.28); }
 .pop-card {
@@ -757,6 +763,27 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
       </div>
 
       <div class="win">
+        <div class="bar"><span>the_path.txt</span><span id="pathCount"></span></div>
+        <div class="body">
+          <div id="pathNum" class="mono kicker"></div>
+          <h2 id="pathTitle" class="idea-t"></h2>
+          <p id="pathSum" class="idea-b"></p>
+          <p class="try"><span class="mono">this week</span><span id="pathTask"></span></p>
+          <div class="xp" aria-hidden="true"><div id="pathFill" class="xp-fill"></div></div>
+          <div class="btnrow">
+            <button id="pathDone" class="btn" type="button">chapter done · +20 ✦</button>
+          </div>
+          <p class="fine">One chapter a week: read it in your copy, do the task, then mark it done. Summaries are in my own words.</p>
+          <details><summary>all 15 chapters</summary><div id="pathAll"></div></details>
+        </div>
+      </div>
+
+      <div class="win">
+        <div class="bar"><span>practices.exe</span><span>+10 ✦</span></div>
+        <div class="body" id="pracList"></div>
+      </div>
+
+      <div class="win">
         <div class="bar"><span>my_highlights.txt</span><span id="hlCount"></span></div>
         <div class="body">
           <p id="hlNow" class="q"></p>
@@ -849,7 +876,7 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
         <div class="bar"><span>badges.dat</span><span id="badgeCount"></span></div>
         <div class="body">
           <div id="badgeGrid" class="badges"></div>
-          <p class="fine">Stardust: claim daily (+10, more on a streak) · log a moment +2 (+1 with a mood) · 3-min visualisation +15 · habit tick +5 · power question +5 · finished goal +50.</p>
+          <p class="fine">Stardust: claim daily (+10, more on a streak) · log a moment +2 (+1 with a mood) · 3-min visualisation +15 · habit tick +5 · power question +5 · finished goal +50 · guided practice +10 · book chapter +20.</p>
         </div>
       </div>
 
@@ -944,6 +971,19 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
   <div id="showCap" class="show-cap"></div>
 </div>
 
+<div id="prac" class="prac" hidden>
+  <div class="prac-in">
+    <div id="pracName" class="mono kicker"></div>
+    <div class="ringbox" id="pracRing"><span class="ring-t" id="pracTime"></span></div>
+    <p id="pracCue" class="q"></p>
+    <div id="pracStep" class="mono kicker"></div>
+    <div class="btnrow" style="justify-content:center">
+      <button id="pracPause" class="btn ghost" type="button">pause</button>
+      <button id="pracClose" class="btn ghost" type="button">end</button>
+    </div>
+  </div>
+</div>
+
 <div id="pop" class="pop" hidden>
   <div class="pop-card" role="dialog" aria-modal="true" aria-labelledby="popText">
     <div id="popChar" class="char"></div>
@@ -998,11 +1038,94 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
     { t: "Ease up on yourself", b: "Too much self-criticism makes people inhibited: stiff, self-conscious, hesitant. His fix was to care a bit less: speak without rehearsing, act before it's perfect.", y: "Send, post or say one thing today without editing it three times." },
     { t: "The area of the possible", b: "Your self-image draws a boundary around what feels possible for someone like you, and results tend to stay inside it. Widen the boundary and your results have room to grow.", y: "Imagine your income, body or work at the next level as simply normal, not lucky." },
     { t: "Live in the present", b: "The creative mechanism can only act now. Planning helps, but tension about tomorrow doesn't. Do what's in front of you with full attention.", y: "Do the next small task with nothing else open." },
-    { t: "It's never fixed", b: "The whole book rests on one hopeful idea: the self-image can change at any age. You aren't stuck with the picture you were handed.", y: "Open your visualisation and choose one picture to believe a little more today." }
+    { t: "It's never fixed", b: "The whole book rests on one hopeful idea: the self-image can change at any age. You aren't stuck with the picture you were handed.", y: "Open your visualisation and choose one picture to believe a little more today." },
+    { t: "Free throws in your head", b: "The book describes an experiment where students who only imagined shooting free throws improved almost as much as those who practised on court. Mental practice counts as practice.", y: "Pick one skill. Run 10 perfect reps in your head before you touch the real thing." },
+    { t: "Rehearse the real moment", b: "Maltz had people rehearse interviews, sales calls and hard conversations in imagination first, so the real one felt like something they'd already done.", y: "Play tomorrow's hardest conversation in your head once, start to finish, going well." },
+    { t: "Inferior to whose standard?", b: "Feeling inferior doesn't come from facts. It comes from measuring yourself against someone else's norm. You're not supposed to be them, so the comparison has no meaning.", y: "Catch one comparison today and drop it. You're not in their race." },
+    { t: "See yourself accurately", b: "The goal isn't an inflated self-image. It's a realistic one: neither better nor worse than you are, so you stop wasting energy pretending or hiding.", y: "Write two things you're honestly good at and one you're honestly not. No drama on either." },
+    { t: "Nerves are just energy", b: "The book treats excitement as one basic emotion that shows up as fear or courage depending on where you aim it. The racing heart before a big moment is extra power arriving.", y: "Next time you're nervous, say 'I'm excited' and move toward the thing." },
+    { t: "Too careful makes you shake", b: "Try to thread a needle perfectly and your hand trembles. Doctors call it purpose tremor. The same thing happens when you try too hard not to make a mistake in life.", y: "Do one thing today at 80% carefulness on purpose." },
+    { t: "Self-conscious means others-conscious", b: "Feeling self-conscious is really over-monitoring what other people might think. You're reading their imagined reactions instead of doing the thing.", y: "In your next conversation, put all your attention on the other person." },
+    { t: "Your psychic umbrella", b: "A stimulus only disturbs you if you respond to it. Physical relaxation puts a kind of umbrella between you and whatever is raining on you.", y: "When something annoys you today, relax your shoulders first. Respond after." },
+    { t: "Bet on yourself", b: "Nothing is ever guaranteed. Maltz argued the difference between people who succeed and people who don't is often just the courage to act on their ideas and risk being wrong.", y: "Make one small bet on yourself today: send it, post it, ask for it." },
+    { t: "See people as people", b: "The 'charity' in SUCCESS means real regard for others: treating each person as someone with their own problems and worth. He noticed people who do this feel better about themselves too.", y: "Give one person your full attention and a real compliment today." },
+    { t: "Stop carrying a low opinion of you", b: "Maltz called holding a low opinion of yourself a handicap, not humility. Self-esteem comes from appreciating your own worth, not from being better than anyone.", y: "Finish this: 'One thing I respect about myself is...'" },
+    { t: "Frustration is a signal", b: "Chronic frustration usually means the goal is unrealistic, or the picture of yourself is too small for it. It's information, not a verdict.", y: "Name what's frustrating you. Is it the goal, the method, or the self-image?" },
+    { t: "Aim your aggression", b: "Aggression is the drive that goes after goals. Blocked, it sprays onto the wrong targets: people near you, or yourself. Give it a real goal or burn it off physically.", y: "If you're irritable today, do something physical or attack one task hard." },
+    { t: "Resentment hands them the pen", b: "Resentment means reliving an old injustice and letting someone else write how you feel. It casts you as the victim in your own story.", y: "Take back one feeling today that you've been letting someone else control." },
+    { t: "Success that feels empty", b: "Some people collect the outward signs of success and feel nothing. Maltz's read: the goals weren't really theirs, or they never learned to enjoy what they earn.", y: "Check one goal: do you want it, or do you want to be seen having it?" },
+    { t: "Nostalgia for the future", b: "Always have something ahead that you're working and hoping for. The book calls it nostalgia for the future, and says it keeps you young.", y: "Add one thing to your countdowns that you're honestly excited about." },
+    { t: "Stay needed, stay alive", b: "In the last chapter Maltz shares his belief that goals and feeling needed feed a kind of life force. People fade when they stop looking forward.", y: "Name one person or project that needs you this week. Show up for it." },
+    { t: "What you expect shapes your body", b: "He points to placebos: pills with nothing in them that still help, because the patient expects to get better. Attitude isn't everything, but it reaches the body.", y: "Before your next workout or work block, expect it to go well. Notice the difference." },
+    { t: "Don't overcorrect", b: "A torpedo that swings too hard at every error zigzags wildly. Take the correction, adjust a little, keep moving. One mistake doesn't call for a new plan.", y: "Find one place you're overreacting to a small miss. Make the smallest fix instead." },
+    { t: "Keep the hits, forget the misses", b: "When you learn a skill, your system remembers the successful tries and lets the errors go, if you let it. Brooding on misses saves the wrong file.", y: "Tonight, write down three things that went right. Only those." },
+    { t: "Conscience is a compass, not a judge", b: "An overactive conscience makes people afraid to act at all. Use it to steer, then stop putting yourself on trial for small things.", y: "Let go of guilt about one tiny thing that hurt nobody." },
+    { t: "Hands off the keys", b: "A pianist doesn't think about each finger. Skill happens when the conscious mind picks the goal and lets the trained system play. Thinking about every move breaks it.", y: "In something you already know how to do, stop supervising yourself for 10 minutes." },
+    { t: "Load the problem, then walk away", b: "Creative answers follow a pattern: define the problem, gather what you can, think hard, then drop it. The answer tends to arrive while you're doing something else.", y: "Write tonight's stuck problem as one clear question, then go for a walk." },
+    { t: "A grudge is a wound you keep open", b: "Holding a grudge works like picking at a scar. Maltz said real forgiveness cancels the debt completely, mostly for your own relief.", y: "Pick the smallest grudge you have and mentally tear up the bill." },
+    { t: "Build a decompression chamber", b: "Between a pressured task and the next thing, put a small pause where the tension drains out, so you don't carry it into the next room.", y: "After work today, take 5 quiet minutes before you touch your phone or anyone." },
+    { t: "The goal picture comes first", b: "Your success mechanism needs to see the end result clearly. It works out the how once the what is vivid. Vague goals give it nothing to steer by.", y: "Describe one goal as a finished scene: where you are, what you see, what you say." },
+    { t: "Everyone has the creative mechanism", b: "Maltz insisted creativity isn't reserved for artists. The same mechanism that writes a poem also solves your work problem or finds a way to sell something.", y: "Treat one boring problem today as a creative one. Ask for three odd solutions." },
+    { t: "Events plus your opinion", b: "A lot of unhappiness comes from the opinion you add on top of what happened, not from the event itself. Drop the commentary and most of the sting goes.", y: "When something small goes wrong, state only the fact. Skip the 'this always happens'." },
+    { t: "Understand before you react", b: "The 'understanding' in SUCCESS means checking what's true before responding. Most conflict with people starts from a wrong guess about what they meant.", y: "Before reacting to a message today, ask: what else could this mean?" },
+    { t: "Start with 'suppose'", b: "You don't need to force total belief in a goal. Worry starts with 'suppose it goes wrong'. Use the same gradual method the other way: 'suppose it works'.", y: "Finish this three times: 'Suppose it actually works, then...'" }
   ];
 
   // where each idea lives in The New Psycho-Cybernetics (2001), book page numbers
-  var REFS = ["ch. 1 · p. 3", "ch. 2 · p. 29", "ch. 2 · p. 31", "ch. 3 · p. 53", "ch. 2 · p. 40", "ch. 4 · p. 69", "ch. 7 · p. 117", "ch. 8 · p. 134", "ch. 9 · p. 155", "ch. 6 · p. 114", "ch. 12 · p. 230", "ch. 14 · p. 261", "ch. 3 · p. 64", "ch. 10 · p. 194", "ch. 12 · p. 226", "ch. 5 · p. 87", "ch. 7 · p. 123", "ch. 8 · p. 147", "ch. 6 · p. 101", "ch. 13 · p. 245", "ch. 13 · p. 243", "ch. 6 · p. 112", "", "ch. 3 · p. 43", "ch. 11 · p. 203", "ch. 8 · p. 151", "ch. 6 · p. 110", "ch. 1 · p. 1"];
+  var REFS = ["ch. 1 · p. 3", "ch. 2 · p. 29", "ch. 2 · p. 31", "ch. 3 · p. 53", "ch. 2 · p. 40", "ch. 4 · p. 69", "ch. 7 · p. 117", "ch. 8 · p. 134", "ch. 9 · p. 155", "ch. 6 · p. 114", "ch. 12 · p. 230", "ch. 14 · p. 261", "ch. 3 · p. 64", "ch. 10 · p. 194", "ch. 12 · p. 226", "ch. 5 · p. 87", "ch. 7 · p. 123", "ch. 8 · p. 147", "ch. 6 · p. 101", "ch. 13 · p. 245", "ch. 13 · p. 243", "ch. 6 · p. 112", "ch. 14 · p. 273", "ch. 3 · p. 43", "ch. 11 · p. 203", "ch. 8 · p. 151", "ch. 6 · p. 110", "ch. 1 · p. 1", "ch. 3 · p. 53", "ch. 3 · p. 57", "ch. 4 · p. 77", "ch. 3 · p. 64", "ch. 13 · p. 253", "ch. 11 · p. 210", "ch. 11 · p. 211", "ch. 12 · p. 229", "ch. 8 · p. 140", "ch. 8 · p. 141", "ch. 8 · p. 143", "ch. 9 · p. 157", "ch. 9 · p. 160", "ch. 9 · p. 171", "ch. 9 · p. 175", "ch. 8 · p. 137", "ch. 15 · p. 281", "ch. 15 · p. 286", "ch. 2 · p. 31", "ch. 2 · p. 32", "ch. 11 · p. 217", "ch. 6 · p. 105", "ch. 6 · p. 113", "ch. 10 · p. 193", "ch. 12 · p. 231", "ch. 2 · p. 39", "ch. 1 · p. 14", "ch. 7 · p. 121", "ch. 8 · p. 136", "ch. 14 · p. 273"];
+
+  var PRACTICES = [
+    { id: "quiet", name: "The quiet room", ref: "ch. 12 · p. 230", steps: [
+      [30, "Sit back. Let your shoulders drop. Breathe out slowly."],
+      [40, "Picture a door. Behind it is a room that belongs only to you."],
+      [45, "Look around. What colour are the walls? Where does the light come from?"],
+      [45, "Find your chair and sit down in it. Feel how it holds you."],
+      [50, "Nothing can reach you here. No messages, no deadlines. Just rest."],
+      [30, "Before you leave, notice one thing you love in this room. You can come back any time."]] },
+    { id: "relax", name: "Deep relaxation", ref: "ch. 6 · p. 101", steps: [
+      [30, "Sit loosely or lie back. Let your eyes close."],
+      [35, "Imagine your legs are made of concrete, pressing heavily down."],
+      [35, "Now your arms and hands. Heavy. Sinking."],
+      [35, "Let your jaw hang loose. Smooth out your forehead."],
+      [45, "Picture a calm place you know well. Notice the small things: sounds, light, air."],
+      [60, "Stay there. With each breath out, sink a little further."]] },
+    { id: "winning", name: "The winning feeling", ref: "ch. 14 · p. 261", steps: [
+      [25, "Pick one time you did something well. Any size. Any age."],
+      [35, "Go back there. Where are you standing? What can you see?"],
+      [35, "What did you hear? What did people say to you?"],
+      [40, "Find the feeling in your body. Where does it sit? Let it grow."],
+      [45, "Now picture the thing you're working on next, and carry this same feeling into it."]] },
+    { id: "belief", name: "Question a belief", ref: "ch. 5 · p. 82", steps: [
+      [30, "Name one thing you believe you can't do, or can't be."],
+      [40, "Is there a real reason for it, or did you just accept it once?"],
+      [40, "Could you be wrong about it? Has someone like you done it?"],
+      [40, "Would you believe this about a friend in your exact position?"],
+      [30, "So why keep acting as if it's true? Decide what you'll believe instead."]] },
+    { id: "crisis", name: "Rehearse without pressure", ref: "ch. 13 · p. 245", steps: [
+      [25, "Pick one moment coming up that makes you nervous."],
+      [40, "Run it in your mind, slowly. Nobody is watching. Nothing is at stake."],
+      [35, "See yourself calm. Hear yourself say the first sentence."],
+      [40, "Something goes slightly wrong. Watch yourself handle it easily."],
+      [40, "Finish it well. Notice the nerves were only energy."]] }
+  ];
+
+  var PATH = [
+    { n: 1, p: 1, t: "The self-image", s: "Everything you do stays consistent with the picture you hold of yourself. Willpower against that picture doesn't last. Change the picture and the behaviour follows.", k: "Write five lines on how you currently see yourself. Circle the one you most want to change." },
+    { n: 2, p: 25, t: "Your success mechanism", s: "You have a built-in goal-seeking system. It needs a clear target and it gets there by trial, error and correction, the way a torpedo finds its mark.", k: "Write one target for this week, clear enough to know when you've hit it." },
+    { n: 3, p: 43, t: "Imagination", s: "Your nervous system responds to a vividly imagined experience much like a real one, so mental practice builds real skill and a real self-image.", k: "Run the 3-minute visualisation every day this week." },
+    { n: 4, p: 69, t: "Dehypnotise yourself", s: "Limiting beliefs work like hypnotic suggestions you once accepted. Feelings of inferiority come from measuring yourself against someone else's norm.", k: "List three 'I can't' beliefs and write where each one came from." },
+    { n: 5, p: 82, t: "Rational thinking", s: "Conscious reasoning can change unconscious beliefs. Question them like a lawyer, and stop digging through the past for more evidence against yourself.", k: "Run the 'question a belief' practice on one belief from last week." },
+    { n: 6, p: 101, t: "Relax and let it work", s: "Strain jams the mechanism. Set the goal, do one thing at a time, and let the automatic part of you do its job.", k: "Each day pick one task and do only that, with no forcing." },
+    { n: 7, p: 117, t: "The habit of happiness", s: "Happiness is practised in the present, not earned later. Much unhappiness is the opinion you add on top of events.", k: "Every evening, log three good moments from the day." },
+    { n: 8, p: 134, t: "The success-type personality", s: "Seven traits spell SUCCESS: sense of direction, understanding, courage, charity, esteem, self-confidence, self-acceptance.", k: "Rate yourself 1 to 5 on each letter. Work on the lowest one all week." },
+    { n: 9, p: 155, t: "The failure mechanism", s: "Frustration, misdirected aggression, insecurity, loneliness, uncertainty, resentment and emptiness are warning lights. Glance at them, correct course, don't stare.", k: "Notice which warning light shows up most this week and name the goal it's blocking." },
+    { n: 10, p: 180, t: "Emotional scars", s: "Old hurts make you guarded and stiff. Forgiveness, a stronger self-image and relaxation remove the scar tissue.", k: "Write a forgiveness note you never send. Then delete it." },
+    { n: 11, p: 203, t: "Unlock your personality", s: "Inhibition comes from too much self-monitoring. The cure is practising the opposite: speak before you've rehearsed, act before it's perfect.", k: "Say one thing a day without planning the words first." },
+    { n: 12, p: 224, t: "Your own tranquilizers", s: "You don't have to respond to every signal. Delay the response, relax the body, and keep a quiet room in your mind to retreat to.", k: "Do the quiet room practice three times this week." },
+    { n: 13, p: 243, t: "Crisis into opportunity", s: "Practise without pressure so the response is ready. In the real moment, treat the surge of nerves as energy and keep your eyes on the goal.", k: "Rehearse one upcoming moment with the 'rehearse without pressure' practice." },
+    { n: 14, p: 261, t: "The winning feeling", s: "Success has a feeling you can recall on purpose from past wins and bring into new attempts. Build it gradually, starting with 'suppose it works'.", k: "Do the winning feeling practice right before something hard." },
+    { n: 15, p: 280, t: "More life in your years", s: "Goals, enthusiasm and being needed keep you young. Always have something ahead to look forward to.", k: "Add one thing to your countdowns that you're excited about next year." }
+  ];
 
   var QUESTIONS = [
     "What would I do today if I knew I couldn't fail?",
@@ -1215,15 +1338,17 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
     if (typeof s.music.vol !== "number") s.music.vol = 0.55;
     if (typeof s.music.taps !== "boolean") s.music.taps = true;
     if (!s.charName) s.charName = "Lumi";
+    if (!s.path || typeof s.path !== "object") s.path = {};
     return s;
   }
   function normDay(d) {
     if (!Array.isArray(d.moments)) d.moments = [];
     if (!d.habits || typeof d.habits !== "object") d.habits = {};
     if (!Array.isArray(d.answers)) d.answers = [];
+    if (!d.practices || typeof d.practices !== "object") d.practices = {};
     return d;
   }
-  function cloneDay(k) { return days[k] ? clone(days[k]) : { date: k, moments: [], habits: {}, answers: [] }; }
+  function cloneDay(k) { return days[k] ? clone(days[k]) : { date: k, moments: [], habits: {}, answers: [], practices: {} }; }
   state = normState(null);
   function findDeckIn(s, id) { for (var i = 0; i < s.decks.length; i++) if (s.decks[i].id === id) return s.decks[i]; return null; }
   function findDeck(id) { return findDeckIn(state, id); }
@@ -1322,6 +1447,7 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
     Object.keys(d.habits).forEach(function (k) { if (d.habits[k]) p += 5; });
     if (d.viz) p += 15;
     p += Math.min(15, d.answers.length * 5);
+    p += Math.min(20, Object.keys(d.practices || {}).length * 10);
     return p;
   }
   function claimedOn(k) { return !!(days[k] && days[k].claimed); }
@@ -1338,6 +1464,7 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
       if (d.viz) s.vizDays++;
     });
     state.goals.forEach(function (g) { if (g.done) { s.total += 50; s.goalsDone++; } });
+    PATH.forEach(function (c) { if (state.path[c.n]) s.total += 20; });
     state.decks.forEach(function (dk) { s.media += dk.items.length; });
     return s;
   }
@@ -2051,6 +2178,7 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
     var im = imOverride != null ? imOverride : P_IM[slot % IMAGINE.length];
     $("#imText").textContent = IMAGINE[im];
     $("#imNum").textContent = "scene " + (im + 1) + " of " + IMAGINE.length;
+    renderPath(); renderPracList();
     var qs = state.quotes || [];
     $("#hlCount").textContent = qs.length + (qs.length === 1 ? " line" : " lines");
     if (qs.length) {
@@ -2070,6 +2198,86 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
     var list = $("#qToday"); list.replaceChildren();
     var ans = days[todayKey()] ? days[todayKey()].answers : [];
     ans.slice().reverse().forEach(function (a) { list.append(h("div", { class: "ans" }, h("b", { text: a.q }), a.a)); });
+  }
+
+  function renderPath() {
+    var done = PATH.filter(function (c) { return state.path[c.n]; }).length;
+    var cur = PATH.filter(function (c) { return !state.path[c.n]; })[0];
+    $("#pathCount").textContent = done + " of 15 done";
+    $("#pathFill").style.width = (done / 15 * 100).toFixed(1) + "%";
+    if (cur) {
+      $("#pathNum").textContent = "chapter " + cur.n + " · starts p. " + cur.p;
+      $("#pathTitle").textContent = cur.t;
+      $("#pathSum").textContent = cur.s;
+      $("#pathTask").textContent = cur.k;
+      $("#pathDone").hidden = false; $("#pathDone").dataset.n = cur.n;
+    } else {
+      $("#pathNum").textContent = "all 15 chapters done";
+      $("#pathTitle").textContent = "You finished the book.";
+      $("#pathSum").textContent = "Maltz's advice from here: keep practising. Go back to any chapter that still stings a little.";
+      $("#pathTask").textContent = "Pick the chapter you resisted most and do its task again.";
+      $("#pathDone").hidden = true;
+    }
+    var all = $("#pathAll"); all.replaceChildren();
+    PATH.forEach(function (c) {
+      var on = !!state.path[c.n];
+      all.append(h("div", { class: "row" + (on ? " done" : "") },
+        h("button", { class: "tick", type: "button", "aria-pressed": String(on), "aria-label": "Chapter " + c.n + " done", onclick: function () {
+          if (state.path[c.n]) delete state.path[c.n]; else state.path[c.n] = Date.now();
+          saveState(); renderAll();
+        } }, checkIcon()),
+        h("div", { class: "grow" }, h("div", { class: "title", text: c.n + ". " + c.t }), h("div", { class: "why", text: "p. " + c.p }))));
+    });
+  }
+  function renderPracList() {
+    var box = $("#pracList"); box.replaceChildren();
+    var today = days[todayKey()] ? days[todayKey()].practices : {};
+    PRACTICES.forEach(function (p) {
+      var secs = p.steps.reduce(function (a, x) { return a + x[0]; }, 0);
+      box.append(h("div", { class: "row" },
+        h("div", { class: "grow" }, h("div", { class: "title", text: p.name + (today[p.id] ? " ✓" : "") }), h("div", { class: "why", text: Math.round(secs / 60) + " min · " + p.ref })),
+        h("button", { class: "btn small", type: "button", onclick: function () { openPrac(p.id); } }, "start")));
+    });
+  }
+  var prac = { p: null, i: 0, left: 0, endAt: 0, running: false, int: null };
+  function openPrac(id) {
+    var p = PRACTICES.filter(function (x) { return x.id === id; })[0]; if (!p) return;
+    audioCtx();
+    prac.p = p; prac.i = 0; prac.left = p.steps[0][0] * 1000; prac.endAt = Date.now() + prac.left; prac.running = true;
+    $("#pracName").textContent = p.name.toLowerCase();
+    $("#pracPause").textContent = "pause";
+    $("#prac").hidden = false; document.body.classList.add("noscroll");
+    try { if (navigator.wakeLock) navigator.wakeLock.request("screen").then(function (l) { prac.lock = l; }).catch(function () {}); } catch (e) {}
+    clearInterval(prac.int); prac.int = setInterval(pracTick, 250); pracTick();
+  }
+  function pracTick() {
+    var p = prac.p; if (!p) return;
+    var left = prac.running ? Math.max(0, prac.endAt - Date.now()) : prac.left;
+    if (prac.running && left <= 0) {
+      if (prac.i < p.steps.length - 1) {
+        prac.i++; prac.left = left = p.steps[prac.i][0] * 1000; prac.endAt = Date.now() + left;
+        if (AC && AC.state === "running" && fx) glass(81, AC.currentTime + 0.01, 0.09);
+      } else { pracDone(); return; }
+    }
+    var total = p.steps.reduce(function (a, x) { return a + x[0] * 1000; }, 0), rest = left;
+    for (var j = prac.i + 1; j < p.steps.length; j++) rest += p.steps[j][0] * 1000;
+    var secs = Math.ceil(rest / 1000);
+    $("#pracTime").textContent = Math.floor(secs / 60) + ":" + pad(secs % 60);
+    $("#pracArc").setAttribute("stroke-dashoffset", (RC * (rest / total)).toFixed(2));
+    $("#pracCue").textContent = p.steps[prac.i][1];
+    $("#pracStep").textContent = "step " + (prac.i + 1) + " of " + p.steps.length;
+  }
+  function closePrac() {
+    clearInterval(prac.int); prac.p = null; prac.running = false;
+    try { if (prac.lock) prac.lock.release(); } catch (e) {} prac.lock = null;
+    $("#prac").hidden = true; document.body.classList.remove("noscroll");
+  }
+  function pracDone() {
+    var p = prac.p; closePrac(); chime();
+    var k = todayKey(), d = cloneDay(k), first = !d.practices[p.id], paid = Object.keys(d.practices).length < 2;
+    d.practices[p.id] = Date.now(); days[k] = d; saveDay(k);
+    renderAll(); burst();
+    say(p.name.toLowerCase() + " done." + (first && paid ? " +10 stardust." : "") + " that's the kind of rep that changes the picture.", "happy");
   }
 
   /* --- more tab --- */
@@ -2303,6 +2511,20 @@ details ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-
       var t = $("#hlText").value.trim(); if (!t) { toast("Paste a line first."); return; }
       state.quotes.push({ id: uid(), text: t, page: $("#hlPage").value.trim() });
       e.target.reset(); saveState(); renderAll(); toast("Saved to your highlights.");
+    });
+    $("#pathDone").addEventListener("click", function () {
+      var n = +this.dataset.n; if (!n) return;
+      state.path[n] = Date.now(); saveState(); renderAll(); burst();
+      say("chapter " + n + " done. +20 stardust. " + (n < 15 ? "next one is waiting." : "you finished the whole book."), "happy");
+    });
+    var arc = ringSVG(), fg = arc.querySelector("[data-ring]"); fg.removeAttribute("data-ring"); fg.id = "pracArc";
+    $("#pracRing").prepend(arc);
+    $("#pracClose").addEventListener("click", closePrac);
+    $("#pracPause").addEventListener("click", function () {
+      if (!prac.p) return;
+      if (prac.running) { prac.left = Math.max(0, prac.endAt - Date.now()); prac.running = false; this.textContent = "resume"; }
+      else { prac.endAt = Date.now() + prac.left; prac.running = true; this.textContent = "pause"; }
+      pracTick();
     });
     var all = $("#ideaAll");
     IDEAS.forEach(function (x) { all.append(h("li", { text: x.t })); });
